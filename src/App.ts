@@ -34,7 +34,6 @@ export class App {
     updateGame(command: string) {
         this.gameState.update(command, (newGamestate, output) => {
             this.gameState = newGamestate;
-            console.log(this.gameState);
             return this.display.render(output);
         });
     }

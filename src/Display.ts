@@ -31,12 +31,11 @@ export class Display {
         this.target.appendChild(this.screen);
         this.target.appendChild(this.commandLine);
 
-        const self = this;
         const input = this.inputField;
         input.focus();
-        this.commandLine.addEventListener('submit', function (e) {
+        this.commandLine.addEventListener('submit', (e) => {
             e.preventDefault();
-            self.app.handleUserInput(input.value);
+            this.app.handleUserInput(input.value);
             input.value = '';
         });
     }

@@ -1,4 +1,4 @@
-export interface iCommand {
+interface iCommand {
     isValid: boolean;
     command: string;
 }
