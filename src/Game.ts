@@ -1,5 +1,6 @@
 import { iPlayer, Player } from './Player';
 import { iRoom, Room } from './Room';
+import { iCommand } from './CommandParser';
 
 interface iGame {
     player: iPlayer;
@@ -21,15 +22,15 @@ export class Game {
         });
     }
 
-    update(command: string, callback: (game: Game, output: string) => void) {
+    update(command: iCommand, callback: (game: Game, output: string) => void) {
         let output = '';
 
-        switch (command) {
+        switch (command.action) {
             case 'north':
             case 'south':
             case 'east':
             case 'west':
-                output = this.movePlayer(command);
+                output = this.movePlayer(command.action);
                 break;
             case 'help':
                 output = 'Here is some help...';
@@ -37,6 +38,8 @@ export class Game {
             case 'look':
                 output = this.currentRoom.description;
                 break;
+            case 'use':
+                output = this.useItem(command.item);
         }
 
         return callback(this, output);
@@ -72,6 +75,17 @@ export class Game {
         } else {
             return 'Hmm, you can\'t go that way...';
         }
+    }
+
+    useItem(item: string) {
+        /*
+        check if item is in player's inventory
+            if yes, check if it has an effect if used in current room (TODO expand game.json structure)
+        
+        check if item is in current Room's canUse array
+            if yes, retrive _result_ from item's object in canUse array
+        */
+        return '';
     }
 
     getCurrentRoom() {

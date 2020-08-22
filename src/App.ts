@@ -1,4 +1,4 @@
-import { CommandParser } from './CommandParser';
+import { CommandParser, iCommand } from './CommandParser';
 import { Display } from './Display';
 import { Game } from './Game';
 
@@ -25,13 +25,13 @@ export class App {
         let command = this.CommandParser.processRawInput(userInput);
 
         if (command.isValid) {
-            return this.updateGame(command.command);
+            return this.updateGame(command);
         }
 
         return this.display.render("That's an invalid command, amigo");
     }
 
-    updateGame(command: string) {
+    updateGame(command: iCommand) {
         this.gameState.update(command, (newGamestate, output) => {
             this.gameState = newGamestate;
             return this.display.render(output);

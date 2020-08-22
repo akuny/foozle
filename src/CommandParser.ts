@@ -1,6 +1,8 @@
-interface iCommand {
+export interface iCommand {
     isValid: boolean;
-    command: string;
+    type: string;
+    action: string;
+    item: string;
 }
 
 export class CommandParser {
@@ -22,6 +24,8 @@ export class CommandParser {
             'look',
             'i',
             'inventory',
+            'u',
+            'use',
         ];
     }
 
@@ -31,37 +35,62 @@ export class CommandParser {
 
     validate(rawInput: string) {
         const input: string = rawInput.toLowerCase().trim();
+        let item = '';
+        const splitInput = input.split(' ');
+
+        if (splitInput.length > 0) {
+            item = splitInput[1];
+        }
 
         let result: iCommand = {
             isValid: false,
-            command: input,
+            type: '',
+            action: input,
+            item: item,
         };
 
         if (this.validCommands.includes(input)) {
             result.isValid = true;
 
-            switch (result.command) {
+            switch (result.action) {
                 case 'n':
-                    result.command = 'north';
+                    result.action = 'north';
                     break;
                 case 's':
-                    result.command = 'south';
+                    result.action = 'south';
                     break;
                 case 'e':
-                    result.command = 'east';
+                    result.action = 'east';
                     break;
                 case 'w':
-                    result.command = 'west';
+                    result.action = 'west';
                     break;
                 case 'h':
-                    result.command = 'help';
+                    result.action = 'help';
                     break;
                 case 'l':
-                    result.command = 'look';
+                    result.action = 'look';
                     break;
                 case 'i':
-                    result.command = 'inventory';
+                    result.action = 'inventory';
                     break;
+                default:
+                    break;
+            }
+
+            switch (result.action) {
+                case 'north':
+                case 'south':
+                case 'east':
+                case 'west':
+                    result.type = 'move';
+                case 'use':
+                    result.type = 'use';
+                    result.item = item;
+                case 'help':
+                case 'look':
+                case 'inventory':
+                    result.type = 'move';
                 default:
                     break;
             }
