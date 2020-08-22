@@ -1,38 +1,43 @@
 export interface iCommand {
-    isValid: boolean,
-    command: string
+    isValid: boolean;
+    command: string;
 }
 
 export class CommandParser {
-
     validCommands: string[];
 
     constructor() {
-
         this.validCommands = [
-            'n', 'north', 's', 'south', 'e', 'east', 'w', 'west', 'h', 'help',
-            'l', 'look', 'i', 'inventory'
-        ]
-
+            'n',
+            'north',
+            's',
+            'south',
+            'e',
+            'east',
+            'w',
+            'west',
+            'h',
+            'help',
+            'l',
+            'look',
+            'i',
+            'inventory',
+        ];
     }
 
     processRawInput(rawInput: string) {
-
         return this.validate(rawInput);
-        
     }
 
     validate(rawInput: string) {
-
         const input: string = rawInput.toLowerCase().trim();
 
         let result: iCommand = {
             isValid: false,
-            command: input
+            command: input,
         };
 
         if (this.validCommands.includes(input)) {
- 
             result.isValid = true;
 
             switch (result.command) {
@@ -62,11 +67,8 @@ export class CommandParser {
             }
 
             return result;
-
         }
 
         return result;
-
     }
-
 }

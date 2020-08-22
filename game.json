@@ -1,0 +1,51 @@
+{
+  "player": {
+    "alive": true,
+    "inventory": []
+  },
+
+  "rooms": [
+    {
+      "name": "Foyer",
+      "description": "You are in the foyer of a small white house. You can go east to the dining room or west to the living room. There is a cellar door to your north",
+      "hasPlayer": true,
+      "connections": [
+        { "direction": "east", "room": "Dining Room" },
+        { "direction": "west", "room": "Living Room" },
+        { "direction": "north", "room": "Cellar" }
+      ],
+      "canUse": [],
+      "canTake": []
+    },
+    {
+      "name": "Living Room",
+      "description": "You are in the tidy living room. There is a piano. You can go east to the foyer.",
+      "hasPlayer": false,
+      "connections": [{ "direction": "east", "room": "Foyer" }],
+      "canUse": [{ "item": "piano", "result": "You play a beautiful song!" }]
+    },
+    {
+      "name": "Dining Room",
+      "description": "You are in the dining room. The table is set for a lavish meal. There is a rusty key on the table. You can go west to the foyer.",
+      "hasPlayer": false,
+      "connections": [{ "direction": "west", "room": "Foyer" }],
+      "canUse": [],
+      "canTake": [
+        {
+          "id": 1,
+          "itemName": "Rusty Key",
+          "canUseOn": "Cellar door",
+          "result": "You take the rusty key and put it in your pocket."
+        }
+      ]
+    },
+    {
+      "name": "Cellar",
+      "description": "You are in the cellar. It is so cold...",
+      "hasPlayer": false,
+      "connections": [{ "direction": "south", "room": "Foyer" }],
+      "canUse": [],
+      "canTake": []
+    }
+  ]
+}

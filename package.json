@@ -4,17 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "start chrome C:/Users/akuny/dev/son-of-foozle/dist/index.html",
+    "start": "./node_modules/nodemon/bin/nodemon.js",
     "test": "jest",
-    "build": "webpack"
+    "build": "tsc && webpack"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.17.1"
+  },
   "devDependencies": {
     "@types/jest": "^25.2.1",
     "@types/node": "^13.13.4",
     "jest": "^25.5.2",
+    "nodemon": "^2.0.4",
+    "prettier": "^2.0.5",
     "ts-jest": "^25.4.0",
     "ts-loader": "^7.0.2",
     "typescript": "^3.8.3",

@@ -1,7 +1,6 @@
-import { App } from "./App";
+import { App } from './App';
 
 export class Display {
-
     app: App;
     target: HTMLDivElement;
     commandLine: HTMLFormElement;
@@ -9,7 +8,6 @@ export class Display {
     screen: HTMLUListElement;
 
     constructor(app: App, target: HTMLDivElement) {
-
         this.app = app;
         this.target = target;
         this.commandLine = document.createElement('form');
@@ -18,15 +16,12 @@ export class Display {
         this.inputField.setAttribute('class', 'terminal');
         this.commandLine.appendChild(this.inputField);
         this.screen = document.createElement('ul');
-
     }
 
     render(description: string) {
-
         let li = document.createElement('li');
         li.appendChild(document.createTextNode(description));
         this.screen.appendChild(li);
-
     }
 
     turnOn(firstDescription: string) {
@@ -35,16 +30,14 @@ export class Display {
         this.screen.appendChild(li);
         this.target.appendChild(this.screen);
         this.target.appendChild(this.commandLine);
-        
+
         const self = this;
         const input = this.inputField;
         input.focus();
-        this.commandLine.addEventListener('submit', function(e) {
+        this.commandLine.addEventListener('submit', function (e) {
             e.preventDefault();
             self.app.handleUserInput(input.value);
             input.value = '';
         });
-
     }
-
 }

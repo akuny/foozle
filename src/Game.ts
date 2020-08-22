@@ -2,31 +2,29 @@ import { iPlayer, Player } from './Player';
 import { iRoom, Room } from './Room';
 
 interface iGame {
-    player: iPlayer,
-    rooms: iRoom[]
+    player: iPlayer;
+    rooms: iRoom[];
 }
 
 export class Game {
-
     currentRoom!: Room;
     otherRooms: Room[] = [];
     player: Player;
 
     constructor(game: iGame) {
-
         this.player = new Player(game.player);
 
-        game.rooms.forEach(obj => {
-            obj.hasPlayer ? this.currentRoom = new Room(obj) : this.otherRooms.push(new Room(obj));
+        game.rooms.forEach((obj) => {
+            obj.hasPlayer
+                ? (this.currentRoom = new Room(obj))
+                : this.otherRooms.push(new Room(obj));
         });
-
     }
 
     update(command: string, callback: (game: Game, output: string) => void) {
-
         let output = '';
 
-        switch(command) {
+        switch (command) {
             case 'north':
             case 'south':
             case 'east':
@@ -42,20 +40,17 @@ export class Game {
         }
 
         return callback(this, output);
-
     }
 
-    movePlayer(direction: string) : string {
-
+    movePlayer(direction: string): string {
         let result = this.currentRoom.hasConnection(direction);
 
         if (result.hasRoom) {
-
-            let roomSearchResult = this.otherRooms.find(room => {
+            let roomSearchResult = this.otherRooms.find((room) => {
                 return room.name === result.newRoom;
             });
 
-            let newRoom: Room
+            let newRoom: Room;
 
             if (roomSearchResult !== undefined) {
                 newRoom = roomSearchResult;
@@ -67,26 +62,19 @@ export class Game {
             this.currentRoom.hasPlayer = false;
 
             this.otherRooms.push(this.currentRoom);
-            this.otherRooms = this.otherRooms.filter(room => {
+            this.otherRooms = this.otherRooms.filter((room) => {
                 return room.name !== result.newRoom;
             });
 
             this.currentRoom = newRoom;
 
             return this.currentRoom.description;
-
         } else {
-
             return 'Hmm, you can\'t go that way...';
-
         }
-
     }
 
     getCurrentRoom() {
-
         return this.currentRoom.description;
-
     }
-
 }
