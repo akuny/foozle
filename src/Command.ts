@@ -1,4 +1,5 @@
 export interface iCommand {
+    isValid(): boolean;
     getCommand(): {
         type: string;
         action: string;
