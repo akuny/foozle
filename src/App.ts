@@ -1,4 +1,4 @@
-import { CommandParser, iCommand } from './CommandParser';
+import { Command, iCleanCommand } from './Command';
 import { Display } from './Display';
 import { Game } from './Game';
 
@@ -6,13 +6,11 @@ const game = require('../game.json');
 
 export class App {
     target: HTMLDivElement;
-    CommandParser: CommandParser;
     display: Display;
     gameState: Game;
 
     constructor(target: HTMLDivElement) {
         this.target = target;
-        this.CommandParser = new CommandParser();
         this.display = new Display(this, this.target);
         this.gameState = new Game(game);
     }
@@ -22,16 +20,16 @@ export class App {
     }
 
     handleUserInput(userInput: string) {
-        let command = this.CommandParser.processRawInput(userInput);
+        let command = new Command(userInput);
 
-        if (command.isValid) {
-            return this.updateGame(command);
+        if (command.isValid()) {
+            return this.updateGame(command.getCleanCommand());
         }
 
         return this.display.render("That's an invalid command, amigo");
     }
 
-    updateGame(command: iCommand) {
+    updateGame(command: iCleanCommand) {
         this.gameState.update(command, (newGamestate, output) => {
             this.gameState = newGamestate;
             return this.display.render(output);
