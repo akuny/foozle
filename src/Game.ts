@@ -1,6 +1,6 @@
 import { iPlayer, Player } from './Player';
 import { iRoom, Room } from './Room';
-import { iCleanCommand } from './Command';
+import { iCommand } from './Command';
 
 interface iGame {
     player: iPlayer;
@@ -26,21 +26,19 @@ export class Game {
         return this.currentRoom.description;
     }
 
-    update(
-        command: iCleanCommand,
-        callback: (game: Game, output: string) => void
-    ) {
+    update(command: iCommand, callback: (game: Game, output: string) => void) {
         let output = '';
+        let { type, action, item } = command.getCommand();
 
-        switch (command.type) {
+        switch (type) {
             case 'move':
-                output = this.movePlayer(command.action);
+                output = this.movePlayer(action);
                 break;
             case 'use':
-                output = this.useItem(command.item);
+                output = this.useItem(item);
                 break;
             case 'other':
-                switch (command.action) {
+                switch (action) {
                     case 'help':
                         output = 'Here is some help...';
                         break;

@@ -1,4 +1,4 @@
-import { Command, iCleanCommand } from './Command';
+import { Command, iCommand } from './Command';
 import { Display } from './Display';
 import { Game } from './Game';
 
@@ -23,13 +23,13 @@ export class App {
         let command = new Command(userInput);
 
         if (command.isValid()) {
-            return this.updateGame(command.getCleanCommand());
+            return this.updateGame(command);
         }
 
         return this.display.render("That's an invalid command, amigo");
     }
 
-    private updateGame(command: iCleanCommand) {
+    private updateGame(command: iCommand) {
         this.gameState.update(command, (newGamestate, output) => {
             this.gameState = newGamestate;
             return this.display.render(output);

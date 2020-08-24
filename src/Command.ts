@@ -1,24 +1,26 @@
-export interface iCleanCommand {
-    type: string;
-    action: string;
-    item: string;
+export interface iCommand {
+    getCommand(): {
+        type: string;
+        action: string;
+        item: string;
+    };
 }
 
 export class Command {
-    rawInput: string;
-    valid: boolean;
-    type: string;
-    action: string;
-    item: string;
-    validCommands: string[];
+    private valid: boolean;
+    private type: string;
+    private action: string;
+    private item: string;
+    private validMovementCommands: string[];
+    private validUseCommands: string[];
+    private validUtilityCommands: string[];
 
     constructor(rawInput: string) {
-        this.rawInput = '';
         this.valid = false;
         this.type = '';
         this.action = '';
         this.item = '';
-        this.validCommands = [
+        this.validMovementCommands = [
             'n',
             'north',
             's',
@@ -27,14 +29,15 @@ export class Command {
             'east',
             'w',
             'west',
+        ];
+        this.validUseCommands = ['use', 'play', 'take'];
+        this.validUtilityCommands = [
             'h',
             'help',
             'l',
             'look',
             'i',
             'inventory',
-            'u',
-            'use',
         ];
         this.validate(rawInput);
     }
@@ -43,7 +46,7 @@ export class Command {
         return this.valid;
     }
 
-    getCleanCommand() {
+    getCommand() {
         return {
             type: this.type,
             action: this.action,
@@ -61,7 +64,7 @@ export class Command {
             this.item = splitInput[1];
         }
 
-        if (this.validCommands.includes(this.action)) {
+        if (this.validMovementCommands.includes(this.action)) {
             this.valid = true;
 
             switch (this.action) {
@@ -77,6 +80,21 @@ export class Command {
                 case 'w':
                     this.action = 'west';
                     break;
+                default:
+                    break;
+            }
+
+            return (this.type = 'move');
+        }
+
+        if (this.validUseCommands.includes(this.action)) {
+            this.valid = true;
+            return (this.type = 'use');
+        }
+
+        if (this.validUtilityCommands.includes(this.action)) {
+            this.valid = true;
+            switch (this.action) {
                 case 'h':
                     this.action = 'help';
                     break;
@@ -86,35 +104,10 @@ export class Command {
                 case 'i':
                     this.action = 'inventory';
                     break;
-                case 'u':
-                    this.action = 'use';
-                    break;
                 default:
                     break;
             }
-
-            switch (this.action) {
-                case 'north':
-                case 'south':
-                case 'east':
-                case 'west':
-                    this.type = 'move';
-                    break;
-                case 'use':
-                    this.type = 'use';
-                    break;
-                case 'help':
-                case 'look':
-                case 'inventory':
-                    this.type = 'other';
-                    break;
-                default:
-                    break;
-            }
-
-            return this;
+            return (this.type = 'other');
         }
-
-        return this;
     }
 }
