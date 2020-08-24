@@ -22,6 +22,10 @@ export class Game {
         });
     }
 
+    getCurrentRoom() {
+        return this.currentRoom.description;
+    }
+
     update(
         command: iCleanCommand,
         callback: (game: Game, output: string) => void
@@ -51,7 +55,7 @@ export class Game {
         return callback(this, output);
     }
 
-    movePlayer(direction: string): string {
+    private movePlayer(direction: string): string {
         let result = this.currentRoom.hasConnection(direction);
 
         if (result.hasRoom) {
@@ -83,7 +87,7 @@ export class Game {
         }
     }
 
-    useItem(item: string) {
+    private useItem(item: string) {
         /*
         check if item is in player's inventory
             if yes, check if it has an effect if used in current room (TODO expand game.json structure)
@@ -92,9 +96,5 @@ export class Game {
             if yes, retrive _result_ from item's object in canUse array
         */
         return `You are using ${item}`;
-    }
-
-    getCurrentRoom() {
-        return this.currentRoom.description;
     }
 }

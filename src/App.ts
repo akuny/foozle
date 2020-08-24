@@ -29,7 +29,7 @@ export class App {
         return this.display.render("That's an invalid command, amigo");
     }
 
-    updateGame(command: iCleanCommand) {
+    private updateGame(command: iCleanCommand) {
         this.gameState.update(command, (newGamestate, output) => {
             this.gameState = newGamestate;
             return this.display.render(output);

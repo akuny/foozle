@@ -39,7 +39,19 @@ export class Command {
         this.validate(rawInput);
     }
 
-    validate(rawInput: string) {
+    isValid() {
+        return this.valid;
+    }
+
+    getCleanCommand() {
+        return {
+            type: this.type,
+            action: this.action,
+            item: this.item,
+        };
+    }
+
+    private validate(rawInput: string) {
         const trimmedInput = rawInput.toLowerCase().trim();
         const splitInput = trimmedInput.split(' ');
 
@@ -104,17 +116,5 @@ export class Command {
         }
 
         return this;
-    }
-
-    isValid() {
-        return this.valid;
-    }
-
-    getCleanCommand() {
-        return {
-            type: this.type,
-            action: this.action,
-            item: this.item,
-        };
     }
 }
