@@ -21,7 +21,7 @@ export class Command {
         this.valid = false;
         this.type = '';
         this.action = '';
-        this.items = [''];
+        this.items = ['none'];
         this.validMovementCommands = [
             'n',
             'north',
@@ -83,19 +83,19 @@ export class Command {
                         break;
                 }
 
-                return (this.type = 'move');
+                this.type = 'move';
             }
 
             if (this.validUseCommands.includes(splitInput[i])) {
                 this.valid = true;
                 this.action = splitInput[i];
-                return (this.type = 'use');
+                this.type = 'use';
             }
 
             if (this.validTakeCommands.includes(splitInput[i])) {
                 this.valid = true;
                 this.action = splitInput[i];
-                return (this.type = 'take');
+                this.type = 'take';
             }
 
             if (this.validUtilityCommands.includes(splitInput[i])) {
@@ -108,16 +108,29 @@ export class Command {
                     case 'l':
                         this.action = 'look';
                         break;
-                    case 'i':
+                    case 'iprivate items: string[];':
                         this.action = 'inventory';
                         break;
                     default:
                         break;
                 }
-                return (this.type = 'other');
+                this.type = 'other';
             }
 
-            this.items.push(splitInput[i]);
+            const allCommands = this.validMovementCommands
+                .concat(this.validTakeCommands)
+                .concat(this.validUseCommands)
+                .concat(this.validUtilityCommands);
+
+            if (!allCommands.includes(splitInput[i])) {
+                console.log('ELSE!!!!!!!!!');
+
+                const cleanItemsArr = this.items.filter((str) => {
+                    return str !== 'none';
+                });
+                this.items = cleanItemsArr;
+                this.items.push(splitInput[i]);
+            }
         }
     }
 }
