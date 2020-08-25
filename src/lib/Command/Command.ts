@@ -49,7 +49,10 @@ export class Command implements iCommand {
         const splitInput = rawInput.toLowerCase().trim().split(' ');
 
         splitInput.forEach((word) => {
-            if (!this.allCommands.includes(word)) {
+            if (this.allCommands.includes(word)) {
+                this.valid = true;
+                this.action = word;
+            } else {
                 this.items = this.items.filter((str) => {
                     return str !== 'none';
                 });
@@ -75,9 +78,6 @@ export class Command implements iCommand {
     }
 
     private handleMovementCommand(word: string) {
-        this.valid = true;
-        this.action = word;
-
         switch (this.action) {
             case 'n':
                 this.action = 'north';
@@ -98,20 +98,14 @@ export class Command implements iCommand {
     }
 
     private handleUseCommand(word: string) {
-        this.valid = true;
-        this.action = word;
         this.type = 'use';
     }
 
     private handleTakeCommand(word: string) {
-        this.valid = true;
-        this.action = word;
         this.type = 'take';
     }
 
     private handleUtilityCommand(word: string) {
-        this.valid = true;
-        this.action = word;
         switch (this.action) {
             case 'h':
                 this.action = 'help';
