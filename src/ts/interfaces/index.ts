@@ -12,12 +12,6 @@ export interface iGame {
     rooms: iRoom[];
 }
 
-export interface iRoomConnection {
-    direction: string;
-    room: string;
-    locked: boolean;
-}
-
 export interface iItem {
     item: {
         id: number;
@@ -25,6 +19,11 @@ export interface iItem {
         canUse: boolean;
         result: string;
     }[];
+}
+
+export interface iPlayer {
+    alive: boolean;
+    inventory: string[];
 }
 
 export interface iRoom {
@@ -35,7 +34,8 @@ export interface iRoom {
     items: iItem[];
 }
 
-export interface iPlayer {
-    alive: boolean;
-    inventory: string[];
+export interface iRoomConnection {
+    direction: string;
+    room: string;
+    locked: boolean;
 }

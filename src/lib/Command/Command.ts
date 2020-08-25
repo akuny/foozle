@@ -116,8 +116,6 @@ export class Command implements iCommand {
                 .concat(this.validUtilityCommands);
 
             if (!allCommands.includes(splitInput[i])) {
-                console.log('ELSE!!!!!!!!!');
-
                 const cleanItemsArr = this.items.filter((str) => {
                     return str !== 'none';
                 });
