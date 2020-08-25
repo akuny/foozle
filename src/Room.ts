@@ -1,17 +1,14 @@
 interface iRoomConnection {
     direction: string;
     room: string;
+    locked: boolean;
 }
 
-interface iRoomFixedItems {
-    canUse: { item: string; result: string }[];
-}
-
-interface iRoomMoveableItems {
-    canTake: {
+interface iItem {
+    item: {
         id: number;
         itemName: string;
-        canUseOn: string;
+        canUse: boolean;
         result: string;
     }[];
 }
@@ -21,8 +18,7 @@ export interface iRoom {
     description: string;
     hasPlayer: boolean;
     connections: iRoomConnection[];
-    canUse: iRoomFixedItems[];
-    canTake: iRoomMoveableItems[];
+    items: iItem[];
 }
 
 export class Room {
@@ -30,16 +26,14 @@ export class Room {
     description: string;
     hasPlayer: boolean;
     connections: iRoomConnection[];
-    canUse: iRoomFixedItems[];
-    canTake: iRoomMoveableItems[];
+    items: iItem[];
 
     constructor(room: iRoom) {
         this.name = room.name;
         this.description = room.description;
         this.hasPlayer = room.hasPlayer;
         this.connections = room.connections;
-        this.canUse = room.canUse;
-        this.canTake = room.canTake;
+        this.items = room.items;
     }
 
     hasConnection(direction: string) {
@@ -50,10 +44,12 @@ export class Room {
         if (result.length > 0) {
             let matchedDirection = result[0];
 
-            return {
-                hasRoom: true,
-                newRoom: matchedDirection.room,
-            };
+            if (!matchedDirection.locked) {
+                return {
+                    hasRoom: true,
+                    newRoom: matchedDirection.room,
+                };
+            }
         }
 
         return { hasRoom: false, newRoom: null };

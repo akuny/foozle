@@ -3,7 +3,7 @@ export interface iCommand {
     getCommand(): {
         type: string;
         action: string;
-        item: string;
+        items: string[];
     };
 }
 
@@ -11,16 +11,17 @@ export class Command {
     private valid: boolean;
     private type: string;
     private action: string;
-    private item: string;
+    private items: string[];
     private validMovementCommands: string[];
     private validUseCommands: string[];
+    private validTakeCommands: string[];
     private validUtilityCommands: string[];
 
     constructor(rawInput: string) {
         this.valid = false;
         this.type = '';
         this.action = '';
-        this.item = '';
+        this.items = [''];
         this.validMovementCommands = [
             'n',
             'north',
@@ -31,7 +32,8 @@ export class Command {
             'w',
             'west',
         ];
-        this.validUseCommands = ['use', 'play', 'take'];
+        this.validUseCommands = ['use', 'play', 'open'];
+        this.validTakeCommands = ['take'];
         this.validUtilityCommands = [
             'h',
             'help',
@@ -51,7 +53,7 @@ export class Command {
         return {
             type: this.type,
             action: this.action,
-            item: this.item,
+            items: this.items,
         };
     }
 
@@ -59,56 +61,63 @@ export class Command {
         const trimmedInput = rawInput.toLowerCase().trim();
         const splitInput = trimmedInput.split(' ');
 
-        this.action = splitInput[0];
+        for (let i = 0; i < splitInput.length; i++) {
+            if (this.validMovementCommands.includes(splitInput[i])) {
+                this.valid = true;
+                this.action = splitInput[i];
 
-        if (splitInput.length > 1) {
-            this.item = splitInput[1];
-        }
+                switch (this.action) {
+                    case 'n':
+                        this.action = 'north';
+                        break;
+                    case 's':
+                        this.action = 'south';
+                        break;
+                    case 'e':
+                        this.action = 'east';
+                        break;
+                    case 'w':
+                        this.action = 'west';
+                        break;
+                    default:
+                        break;
+                }
 
-        if (this.validMovementCommands.includes(this.action)) {
-            this.valid = true;
-
-            switch (this.action) {
-                case 'n':
-                    this.action = 'north';
-                    break;
-                case 's':
-                    this.action = 'south';
-                    break;
-                case 'e':
-                    this.action = 'east';
-                    break;
-                case 'w':
-                    this.action = 'west';
-                    break;
-                default:
-                    break;
+                return (this.type = 'move');
             }
 
-            return (this.type = 'move');
-        }
-
-        if (this.validUseCommands.includes(this.action)) {
-            this.valid = true;
-            return (this.type = 'use');
-        }
-
-        if (this.validUtilityCommands.includes(this.action)) {
-            this.valid = true;
-            switch (this.action) {
-                case 'h':
-                    this.action = 'help';
-                    break;
-                case 'l':
-                    this.action = 'look';
-                    break;
-                case 'i':
-                    this.action = 'inventory';
-                    break;
-                default:
-                    break;
+            if (this.validUseCommands.includes(splitInput[i])) {
+                this.valid = true;
+                this.action = splitInput[i];
+                return (this.type = 'use');
             }
-            return (this.type = 'other');
+
+            if (this.validTakeCommands.includes(splitInput[i])) {
+                this.valid = true;
+                this.action = splitInput[i];
+                return (this.type = 'take');
+            }
+
+            if (this.validUtilityCommands.includes(splitInput[i])) {
+                this.valid = true;
+                this.action = splitInput[i];
+                switch (this.action) {
+                    case 'h':
+                        this.action = 'help';
+                        break;
+                    case 'l':
+                        this.action = 'look';
+                        break;
+                    case 'i':
+                        this.action = 'inventory';
+                        break;
+                    default:
+                        break;
+                }
+                return (this.type = 'other');
+            }
+
+            this.items.push(splitInput[i]);
         }
     }
 }

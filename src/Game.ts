@@ -28,15 +28,17 @@ export class Game {
 
     update(command: iCommand, callback: (game: Game, output: string) => void) {
         let output = '';
-        let { type, action, item } = command.getCommand();
+        let { type, action, items } = command.getCommand();
 
         switch (type) {
             case 'move':
                 output = this.movePlayer(action);
                 break;
             case 'use':
-                output = this.useItem(item);
+                output = this.useItem(items);
                 break;
+            case 'take':
+                output = this.takeItem(items);
             case 'other':
                 switch (action) {
                     case 'help':
@@ -85,7 +87,11 @@ export class Game {
         }
     }
 
-    private useItem(item: string) {
+    private takeItem(item: string[]) {
+        return 'take that item';
+    }
+
+    private useItem(item: string[]) {
         /*
         check if item is in player's inventory
             if yes, check if it has an effect if used in current room (TODO expand game.json structure)

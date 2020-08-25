@@ -7,33 +7,43 @@
   "rooms": [
     {
       "name": "Foyer",
-      "description": "You are in the foyer of a small white house. You can go east to the dining room or west to the living room. There is a cellar door to your north",
+      "description": "You are in the foyer of a small white house. You can go east to the dining room or west to the living room. There is a cellar door to your north; it is locked.",
       "hasPlayer": true,
       "connections": [
-        { "direction": "east", "room": "Dining Room" },
-        { "direction": "west", "room": "Living Room" },
-        { "direction": "north", "room": "Cellar" }
+        { "direction": "east", "room": "Dining Room", "locked": false },
+        { "direction": "west", "room": "Living Room", "locked": false },
+        { "direction": "north", "room": "Cellar", "locked": true }
       ],
-      "canUse": [],
-      "canTake": []
+      "items": []
     },
     {
       "name": "Living Room",
       "description": "You are in the tidy living room. There is a piano. You can go east to the foyer.",
       "hasPlayer": false,
-      "connections": [{ "direction": "east", "room": "Foyer" }],
-      "canUse": [{ "item": "piano", "result": "You play a beautiful song!" }]
+      "connections": [
+        { "direction": "east", "room": "Foyer", "locked": false }
+      ],
+      "items": [
+        {
+          "id": 1,
+          "canTake": false,
+          "itemName": "Piano",
+          "result": "You play a beautiful song!"
+        }
+      ]
     },
     {
       "name": "Dining Room",
       "description": "You are in the dining room. The table is set for a lavish meal. There is a rusty key on the table. You can go west to the foyer.",
       "hasPlayer": false,
-      "connections": [{ "direction": "west", "room": "Foyer" }],
-      "canUse": [],
-      "canTake": [
+      "connections": [
+        { "direction": "west", "room": "Foyer", "locked": false }
+      ],
+      "items": [
         {
-          "id": 1,
-          "itemName": "Rusty Key",
+          "id": 2,
+          "canTake": true,
+          "itemName": "Rusty key",
           "canUseOn": "Cellar door",
           "result": "You take the rusty key and put it in your pocket."
         }
@@ -41,11 +51,18 @@
     },
     {
       "name": "Cellar",
-      "description": "You are in the cellar. It is so cold...",
+      "description": "You are in the cellar. It is so cold...there's a letter on the ground",
       "hasPlayer": false,
       "connections": [{ "direction": "south", "room": "Foyer" }],
-      "canUse": [],
-      "canTake": []
+      "items": [
+        {
+          "id": 3,
+          "canTake": true,
+          "itemName": "Letter",
+          "canUseOn": "Cellar door",
+          "result": "It's a crumpled love note."
+        }
+      ]
     }
   ]
 }
