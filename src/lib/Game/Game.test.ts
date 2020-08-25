@@ -1,5 +1,5 @@
 import { Game } from './Game';
-import mockGame from './mock-game';
+import mockDisk from './mock-disk';
 
 const mockPlayer = jest.fn();
 const mockRoom = jest.fn();
@@ -12,7 +12,7 @@ beforeEach(() => {
 describe('Game class', () => {
     describe('getCurrentRoom() method', () => {
         test('Returns the current room when called', () => {
-            const testGame = new Game(mockGame);
+            const testGame = new Game(mockDisk);
             const result = testGame.getCurrentRoom();
             expect(result).toBe('You are in the foyer of a small white house.');
         });
