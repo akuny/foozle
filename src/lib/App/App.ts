@@ -1,15 +1,14 @@
-import { Command, iCommand } from './Command';
-import { Display } from './Display';
-import { Game } from './Game';
-
-const game = require('../game.json');
+import { iCommand, iGame } from '../../ts/interfaces';
+import Command from '../Command';
+import Display from '../Display';
+import Game from '../Game';
 
 export class App {
     target: HTMLDivElement;
     display: Display;
     gameState: Game;
 
-    constructor(target: HTMLDivElement) {
+    constructor(target: HTMLDivElement, game: iGame) {
         this.target = target;
         this.display = new Display(this, this.target);
         this.gameState = new Game(game);

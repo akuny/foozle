@@ -1,5 +1,4 @@
 import { Command } from './Command';
-import jest from 'jest';
 
 describe('Command class', () => {
     describe('isValid() method', () => {

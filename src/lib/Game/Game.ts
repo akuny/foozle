@@ -1,11 +1,6 @@
-import { iPlayer, Player } from './Player';
-import { iRoom, Room } from './Room';
-import { iCommand } from './Command';
-
-interface iGame {
-    player: iPlayer;
-    rooms: iRoom[];
-}
+import Player from '../Player';
+import Room from '../Room';
+import { iCommand, iGame } from '../../ts/interfaces';
 
 export class Game {
     currentRoom!: Room;

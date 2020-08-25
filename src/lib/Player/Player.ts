@@ -1,7 +1,4 @@
-export interface iPlayer {
-    alive: boolean;
-    inventory: string[];
-}
+import { iPlayer } from '../../ts/interfaces';
 
 export class Player {
     alive: boolean;

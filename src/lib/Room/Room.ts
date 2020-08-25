@@ -1,25 +1,4 @@
-interface iRoomConnection {
-    direction: string;
-    room: string;
-    locked: boolean;
-}
-
-interface iItem {
-    item: {
-        id: number;
-        itemName: string;
-        canUse: boolean;
-        result: string;
-    }[];
-}
-
-export interface iRoom {
-    name: string;
-    description: string;
-    hasPlayer: boolean;
-    connections: iRoomConnection[];
-    items: iItem[];
-}
+import { iItem, iRoom, iRoomConnection } from '../../ts/interfaces';
 
 export class Room {
     name: string;

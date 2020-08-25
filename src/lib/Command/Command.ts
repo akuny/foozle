@@ -1,13 +1,6 @@
-export interface iCommand {
-    isValid(): boolean;
-    getCommand(): {
-        type: string;
-        action: string;
-        items: string[];
-    };
-}
+import { iCommand } from '../../ts/interfaces';
 
-export class Command {
+export class Command implements iCommand {
     private valid: boolean;
     private type: string;
     private action: string;
