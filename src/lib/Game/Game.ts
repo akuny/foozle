@@ -1,4 +1,4 @@
-import { iCommand, iGame } from '../../ts/interfaces';
+import { iCommandPayload, iGame } from '../../ts/interfaces';
 import Player from '../Player';
 import Room from '../Room';
 
@@ -21,9 +21,12 @@ export class Game {
         return this.currentRoom.description;
     }
 
-    update(command: iCommand, callback: (game: Game, output: string) => void) {
+    update(
+        command: iCommandPayload,
+        callback: (game: Game, output: string) => void
+    ) {
         let output = '';
-        let { type, action, items } = command.getCommand();
+        let { type, action, items } = command;
 
         switch (type) {
             case 'move':

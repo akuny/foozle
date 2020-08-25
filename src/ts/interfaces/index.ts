@@ -1,10 +1,12 @@
 export interface iCommand {
     isValid(): boolean;
-    getCommand(): {
-        type: string;
-        action: string;
-        items: string[];
-    };
+    getPayload(): iCommandPayload;
+}
+
+export interface iCommandPayload {
+    type: string;
+    action: string;
+    items: string[];
 }
 
 export interface iGame {

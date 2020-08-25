@@ -1,4 +1,4 @@
-import { iCommand } from '../../ts/interfaces';
+import { iCommand, iCommandPayload } from '../../ts/interfaces';
 
 export class Command implements iCommand {
     private valid: boolean;
@@ -38,11 +38,11 @@ export class Command implements iCommand {
         this.validate(rawInput);
     }
 
-    isValid() {
+    isValid(): boolean {
         return this.valid;
     }
 
-    getCommand() {
+    getPayload(): iCommandPayload {
         return {
             type: this.type,
             action: this.action,
@@ -55,9 +55,10 @@ export class Command implements iCommand {
         const splitInput = trimmedInput.split(' ');
 
         for (let i = 0; i < splitInput.length; i++) {
-            if (this.validMovementCommands.includes(splitInput[i])) {
+            const word = splitInput[i];
+            if (this.validMovementCommands.includes(word)) {
                 this.valid = true;
-                this.action = splitInput[i];
+                this.action = word;
 
                 switch (this.action) {
                     case 'n':
@@ -79,21 +80,21 @@ export class Command implements iCommand {
                 this.type = 'move';
             }
 
-            if (this.validUseCommands.includes(splitInput[i])) {
+            if (this.validUseCommands.includes(word)) {
                 this.valid = true;
-                this.action = splitInput[i];
+                this.action = word;
                 this.type = 'use';
             }
 
-            if (this.validTakeCommands.includes(splitInput[i])) {
+            if (this.validTakeCommands.includes(word)) {
                 this.valid = true;
-                this.action = splitInput[i];
+                this.action = word;
                 this.type = 'take';
             }
 
-            if (this.validUtilityCommands.includes(splitInput[i])) {
+            if (this.validUtilityCommands.includes(word)) {
                 this.valid = true;
-                this.action = splitInput[i];
+                this.action = word;
                 switch (this.action) {
                     case 'h':
                         this.action = 'help';
@@ -115,12 +116,11 @@ export class Command implements iCommand {
                 .concat(this.validUseCommands)
                 .concat(this.validUtilityCommands);
 
-            if (!allCommands.includes(splitInput[i])) {
-                const cleanItemsArr = this.items.filter((str) => {
+            if (!allCommands.includes(word)) {
+                this.items = this.items.filter((str) => {
                     return str !== 'none';
                 });
-                this.items = cleanItemsArr;
-                this.items.push(splitInput[i]);
+                this.items.push(word);
             }
         }
     }

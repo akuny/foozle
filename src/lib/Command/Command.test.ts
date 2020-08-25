@@ -4,35 +4,33 @@ describe('Command class', () => {
     describe('isValid() method', () => {
         test('Returns true when a movement command is passed', () => {
             const movementCommand = new Command('north');
-            const valid = movementCommand.isValid();
-            expect(valid).toBe(true);
+            expect(movementCommand.isValid()).toBe(true);
         });
         test('Returns false when an invalid command is passed', () => {
             const garbageCommand = new Command('foo');
-            const valid = garbageCommand.isValid();
-            expect(valid).toBe(false);
+            expect(garbageCommand.isValid()).toBe(false);
         });
     });
     describe('getCommand() method', () => {
         test('Returns a movement command as expected', () => {
-            const validMovementObj = {
+            const validMovementPayload = {
                 type: 'move',
                 action: 'north',
                 items: ['none'],
             };
             const movementCommand = new Command('north');
-            const commandObj = movementCommand.getCommand();
-            expect(commandObj).toMatchObject(validMovementObj);
+            expect(movementCommand.getPayload()).toMatchObject(
+                validMovementPayload
+            );
         });
         test('Returns a take command as expected', () => {
-            const validTakeObj = {
+            const validTakePayload = {
                 type: 'take',
                 action: 'take',
                 items: ['the', 'key'],
             };
             const takeCommand = new Command('Take the key');
-            const takeObj = takeCommand.getCommand();
-            expect(takeObj).toMatchObject(validTakeObj);
+            expect(takeCommand.getPayload()).toMatchObject(validTakePayload);
         });
     });
 });
