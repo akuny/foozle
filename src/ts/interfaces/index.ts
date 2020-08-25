@@ -15,17 +15,16 @@ export interface iDisk {
 }
 
 export interface iItem {
-    item: {
-        id: number;
-        itemName: string;
-        canUse: boolean;
-        result: string;
-    }[];
+    id: number;
+    itemName: string;
+    canTake: boolean;
+    canUseOn: string[];
+    result: string;
 }
 
 export interface iPlayer {
     alive: boolean;
-    inventory: string[];
+    inventory: iItem[];
 }
 
 export interface iRoom {

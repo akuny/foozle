@@ -90,6 +90,10 @@ export class Game {
     }
 
     private useItem(item: string[]) {
+        if (this.player.hasInInventory(item)) {
+            console.log('gotteem');
+        }
+
         /*
         check if item is in player's inventory
             if yes, check if it has an effect if used in current room (TODO expand game.json structure)
