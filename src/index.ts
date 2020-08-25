@@ -1,6 +1,6 @@
 import App from './lib/App';
-const game = require('../game.json');
+const disk = require('../disk.json');
 
-let app = new App(<HTMLInputElement>document.getElementById('app'), game);
+let app = new App(<HTMLInputElement>document.getElementById('app'), disk);
 
 app.init();

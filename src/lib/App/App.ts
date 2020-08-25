@@ -1,4 +1,4 @@
-import { iCommandPayload, iGame } from '../../ts/interfaces';
+import { iCommandPayload, iDisk } from '../../ts/interfaces';
 import Command from '../Command';
 import Display from '../Display';
 import Game from '../Game';
@@ -8,10 +8,10 @@ export class App {
     display: Display;
     gameState: Game;
 
-    constructor(target: HTMLDivElement, game: iGame) {
+    constructor(target: HTMLDivElement, disk: iDisk) {
         this.target = target;
         this.display = new Display(this, this.target);
-        this.gameState = new Game(game);
+        this.gameState = new Game(disk);
     }
 
     init() {

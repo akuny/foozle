@@ -9,7 +9,7 @@ export interface iCommandPayload {
     items: string[];
 }
 
-export interface iGame {
+export interface iDisk {
     player: iPlayer;
     rooms: iRoom[];
 }

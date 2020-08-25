@@ -1,4 +1,4 @@
-import { iCommandPayload, iGame } from '../../ts/interfaces';
+import { iCommandPayload, iDisk } from '../../ts/interfaces';
 import Player from '../Player';
 import Room from '../Room';
 
@@ -7,17 +7,17 @@ export class Game {
     otherRooms: Room[] = [];
     player: Player;
 
-    constructor(game: iGame) {
-        this.player = new Player(game.player);
+    constructor(disk: iDisk) {
+        this.player = new Player(disk.player);
 
-        game.rooms.forEach((obj) => {
+        disk.rooms.forEach((obj) => {
             obj.hasPlayer
                 ? (this.currentRoom = new Room(obj))
                 : this.otherRooms.push(new Room(obj));
         });
     }
 
-    getCurrentRoom() {
+    getCurrentRoom(): string {
         return this.currentRoom.description;
     }
 
