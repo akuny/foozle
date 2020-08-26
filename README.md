@@ -1,2 +1,3 @@
 # foozle
-A very simple text adventure game built with TypeScript. 
+
+A text adventure game engine built with TypeScript.

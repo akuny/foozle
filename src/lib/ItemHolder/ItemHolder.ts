@@ -1,13 +1,13 @@
-import { iInventory, iItem } from '../../ts/interfaces';
+import { iItemHolder, iItem } from '../../ts/interfaces';
 
-export class Inventory implements iInventory {
+export abstract class ItemHolder implements iItemHolder {
     items: iItem[];
 
     constructor(itemArr: iItem[]) {
         this.items = itemArr;
     }
 
-    hasItem(itemNames: string[]) {
+    hasItem(itemNames: string[]): boolean {
         let hasItem = false;
         itemNames.forEach((itemName) => {
             this.items.find((itemObj) => {

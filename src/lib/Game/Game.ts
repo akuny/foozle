@@ -85,18 +85,13 @@ export class Game {
         }
     }
 
-    private takeItem(item: string[]) {
-        return 'take that item';
+    private takeItem(items: string[]) {
+        return `take that ${items}`;
     }
 
     private useItem(items: string[]) {
-        if (
-            this.player.hasInInventory(items) ||
-            this.currentRoom.hasInInventory(items)
-        ) {
-            console.log('gotteem');
+        if (this.player.hasItem(items) || this.currentRoom.hasItem(items)) {
         }
-
         /*
         check if item is in player's inventory
             if yes, check if it has an effect if used in current room (TODO expand game.json structure)

@@ -14,7 +14,7 @@ export interface iDisk {
     rooms: iRoom[];
 }
 
-export interface iInventory {
+export interface iItemHolder {
     hasItem(itemNames: string[]): boolean;
 }
 
@@ -24,12 +24,6 @@ export interface iItem {
     canTake: boolean;
     canUseOn: string[];
     result: string;
-}
-
-export interface iPlayer {
-    alive: boolean;
-    inventory: iInventory;
-    hasInInventory(itemNames: string[]): boolean;
 }
 
 export interface iPlayerPayload {

@@ -1,19 +1,18 @@
-import Inventory from '../Inventory';
-import { iInventory, iRoom, iRoomConnection } from '../../ts/interfaces';
+import ItemHolder from '../ItemHolder';
+import { iRoom, iRoomConnection } from '../../ts/interfaces';
 
-export class Room {
+export class Room extends ItemHolder {
     name: string;
     description: string;
     hasPlayer: boolean;
     connections: iRoomConnection[];
-    inventory: iInventory;
 
     constructor(room: iRoom) {
+        super(room.items);
         this.name = room.name;
         this.description = room.description;
         this.hasPlayer = room.hasPlayer;
         this.connections = room.connections;
-        this.inventory = new Inventory(room.items);
     }
 
     hasConnection(direction: string) {
@@ -33,9 +32,5 @@ export class Room {
         }
 
         return { hasRoom: false, newRoom: null };
-    }
-
-    hasInInventory(itemNames: string[]) {
-        return this.inventory.hasItem(itemNames);
     }
 }
