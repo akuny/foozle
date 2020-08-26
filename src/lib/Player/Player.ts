@@ -1,7 +1,7 @@
-import ItemHolder from '../ItemHolder';
+import Inventory from '../Inventory';
 import { iPlayerPayload } from '../../ts/interfaces';
 
-export class Player extends ItemHolder {
+export class Player extends Inventory {
     alive: boolean;
 
     constructor(player: iPlayerPayload) {

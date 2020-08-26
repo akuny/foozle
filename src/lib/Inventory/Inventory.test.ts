@@ -1,4 +1,4 @@
-import { ItemHolder } from './ItemHolder';
+import { Inventory } from './Inventory';
 import { iItem } from '../../ts/interfaces';
 
 describe('ItemHolder class', () => {
@@ -15,7 +15,7 @@ describe('ItemHolder class', () => {
                 },
             ];
 
-            class TestClass extends ItemHolder {
+            class TestClass extends Inventory {
                 constructor(inventoryArr: iItem[]) {
                     super(inventoryArr);
                 }

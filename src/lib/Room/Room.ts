@@ -1,7 +1,7 @@
-import ItemHolder from '../ItemHolder';
+import Inventory from '../Inventory';
 import { iRoom, iRoomConnection } from '../../ts/interfaces';
 
-export class Room extends ItemHolder {
+export class Room extends Inventory {
     name: string;
     description: string;
     hasPlayer: boolean;

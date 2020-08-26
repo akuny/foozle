@@ -14,7 +14,7 @@ export interface iDisk {
     rooms: iRoom[];
 }
 
-export interface iItemHolder {
+export interface iInventory {
     findItem(itemNames: string[]): object;
     removeItem(itemToRemove: iItem): iItem[];
 }

@@ -1,6 +1,6 @@
-import { iItemHolder, iItem, iItemPayload } from '../../ts/interfaces';
+import { iInventory, iItem, iItemPayload } from '../../ts/interfaces';
 
-export abstract class ItemHolder implements iItemHolder {
+export abstract class Inventory implements iInventory {
     items: iItem[];
 
     constructor(itemArr: iItem[]) {
