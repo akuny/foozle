@@ -45,6 +45,9 @@ export class Game {
                     case 'look':
                         output = this.currentRoom.description;
                         break;
+                    case 'inventory':
+                        output = this.player.showItems();
+                        break;
                 }
             default:
                 break;
@@ -86,11 +89,25 @@ export class Game {
     }
 
     private takeItem(items: string[]) {
-        return `take that ${items}`;
+        const result = this.currentRoom.findItem(items);
+
+        if (result.hasItem) {
+            this.currentRoom.removeItem(result.item);
+            this.currentRoom.description = this.currentRoom.description.replace(
+                result.item.descriptionPhrase,
+                ''
+            );
+            this.player.addItem(result.item);
+            return result.item.result;
+        }
+        return 'I don\'t think you can pick that up.';
     }
 
     private useItem(items: string[]) {
-        if (this.player.hasItem(items) || this.currentRoom.hasItem(items)) {
+        if (this.player.findItem(items).hasItem) {
+        }
+
+        if (this.currentRoom.findItem(items).hasItem) {
         }
         /*
         check if item is in player's inventory

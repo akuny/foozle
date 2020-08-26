@@ -10,6 +10,7 @@ const mockPlayerPayload: iPlayerPayload = {
             canTake: true,
             canUseOn: [''],
             result: 'You write your name!',
+            descriptionPhrase: 'It is on the table.',
         },
     ],
 };

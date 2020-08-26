@@ -1,8 +1,8 @@
 import { ItemHolder } from './ItemHolder';
 import { iItem } from '../../ts/interfaces';
 
-describe('Inventory class', () => {
-    describe('hasInInventory() method', () => {
+describe('ItemHolder class', () => {
+    describe('findItem() method', () => {
         test('Returns true if item is in inventory', () => {
             const mockInventory: iItem[] = [
                 {
@@ -11,6 +11,7 @@ describe('Inventory class', () => {
                     canTake: true,
                     canUseOn: [''],
                     result: 'You write your name!',
+                    descriptionPhrase: 'It is on the table. ',
                 },
             ];
 
@@ -20,7 +21,10 @@ describe('Inventory class', () => {
                 }
             }
             const testInstance = new TestClass(mockInventory);
-            expect(testInstance.hasItem(['the', 'pencil'])).toBe(true);
+            const result = testInstance.findItem(['the', 'Pencil']);
+            console.log(result);
+
+            expect(result.hasItem).toBe(true);
         });
     });
 });

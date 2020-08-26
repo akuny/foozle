@@ -15,15 +15,22 @@ export interface iDisk {
 }
 
 export interface iItemHolder {
-    hasItem(itemNames: string[]): boolean;
+    findItem(itemNames: string[]): object;
+    removeItem(itemToRemove: iItem): iItem[];
 }
 
 export interface iItem {
     id: number;
-    itemName: string;
-    canTake: boolean;
-    canUseOn: string[];
     result: string;
+    itemName: string;
+    descriptionPhrase: string;
+    canTake?: boolean;
+    canUseOn?: string[];
+}
+
+export interface iItemPayload {
+    hasItem: boolean;
+    item: iItem;
 }
 
 export interface iPlayerPayload {

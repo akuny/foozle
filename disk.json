@@ -43,8 +43,9 @@
         {
           "id": 2,
           "canTake": true,
-          "itemName": "Rusty key",
+          "itemName": "Key",
           "canUseOn": "Cellar door",
+          "descriptionPhrase": "There is a rusty key on the table. ",
           "result": "You take the rusty key and put it in your pocket."
         }
       ]
