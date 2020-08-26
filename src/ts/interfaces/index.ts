@@ -25,7 +25,8 @@ export interface iItem {
     itemName: string;
     descriptionPhrase: string;
     canTake?: boolean;
-    canUseOn?: string[];
+    canUseOn?: string;
+    triggers: string[];
 }
 
 export interface iItemPayload {
@@ -40,10 +41,17 @@ export interface iPlayerPayload {
 
 export interface iRoom {
     name: string;
-    description: string;
+    roomStates: iRoomState[];
+    currentRoomState?: iRoomState;
     hasPlayer: boolean;
     connections: iRoomConnection[];
     items: iItem[];
+}
+
+export interface iRoomState {
+    active: boolean;
+    trigger: string;
+    description: string;
 }
 
 export interface iRoomConnection {

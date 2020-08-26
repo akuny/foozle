@@ -18,7 +18,7 @@ export class Game {
     }
 
     getCurrentRoom(): string {
-        return this.currentRoom.description;
+        return this.currentRoom.showCurrentRoomState();
     }
 
     update(
@@ -43,7 +43,7 @@ export class Game {
                         output = 'Here is some help...';
                         break;
                     case 'look':
-                        output = this.currentRoom.description;
+                        output = this.currentRoom.showCurrentRoomState();
                         break;
                     case 'inventory':
                         output = this.player.showItems();
@@ -76,13 +76,17 @@ export class Game {
             this.currentRoom.hasPlayer = false;
 
             this.otherRooms.push(this.currentRoom);
-            this.otherRooms = this.otherRooms.filter((room) => {
-                return room.name !== result.newRoom;
-            });
 
+            const newOtherRooms = (this.otherRooms = this.otherRooms.filter(
+                (room) => {
+                    return room.name !== result.newRoom;
+                }
+            ));
+
+            this.otherRooms = newOtherRooms;
             this.currentRoom = newRoom;
 
-            return this.currentRoom.description;
+            return this.currentRoom.showCurrentRoomState();
         } else {
             return 'Hmm, you can\'t go that way...';
         }
@@ -93,11 +97,8 @@ export class Game {
 
         if (result.hasItem) {
             this.currentRoom.removeItem(result.item);
-            this.currentRoom.description = this.currentRoom.description.replace(
-                result.item.descriptionPhrase,
-                ''
-            );
             this.player.addItem(result.item);
+            this.currentRoom.changeCurrentRoomState(result.item.triggers);
             return result.item.result;
         }
         return 'I don\'t think you can pick that up.';

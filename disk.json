@@ -7,7 +7,18 @@
   "rooms": [
     {
       "name": "Foyer",
-      "description": "You are in the foyer of a small white house. You can go east to the dining room or west to the living room. There is a cellar door to your north; it is locked.",
+      "roomStates": [
+        {
+          "active": true,
+          "trigger": "default",
+          "description": "You are in the foyer of a small white house. You can go east to the dining room or west to the living room. There is a cellar door to your north; it is locked."
+        },
+        {
+          "active": false,
+          "trigger": "usedKey",
+          "description": "You are in the foyer of a small white house. You can go east to the dining room or west to the living room. There is a cellar door to your north; you opened it with a rusky key."
+        }
+      ],
       "hasPlayer": true,
       "connections": [
         { "direction": "east", "room": "Dining Room", "locked": false },
@@ -18,7 +29,18 @@
     },
     {
       "name": "Living Room",
-      "description": "You are in the tidy living room. There is a piano. You can go east to the foyer.",
+      "roomStates": [
+        {
+          "active": true,
+          "trigger": "default",
+          "description": "You are in the tidy living room. There is a piano. You can go east to the foyer."
+        },
+        {
+          "active": false,
+          "trigger": "playedMusic",
+          "description": "You are in the tidy living room. The piano is playing a sad tune on its own. You can go east to the foyer."
+        }
+      ],
       "hasPlayer": false,
       "connections": [
         { "direction": "east", "room": "Foyer", "locked": false }
@@ -28,13 +50,25 @@
           "id": 1,
           "canTake": false,
           "itemName": "Piano",
-          "result": "You play a beautiful song!"
+          "result": "You plink a sad melody. When you stop, the piano is still playing.",
+          "triggers": ["playedMusic"]
         }
       ]
     },
     {
       "name": "Dining Room",
-      "description": "You are in the dining room. The table is set for a lavish meal. There is a rusty key on the table. You can go west to the foyer.",
+      "roomStates": [
+        {
+          "active": true,
+          "trigger": "default",
+          "description": "You are in the dining room. The table is set for a lavish meal. There is a rusty key on the table. You can go west to the foyer."
+        },
+        {
+          "active": false,
+          "trigger": "tookKey",
+          "description": "You are in the dining room. The table is set for a lavish meal. You can go west to the foyer."
+        }
+      ],
       "hasPlayer": false,
       "connections": [
         { "direction": "west", "room": "Foyer", "locked": false }
@@ -46,13 +80,25 @@
           "itemName": "Key",
           "canUseOn": "Cellar door",
           "descriptionPhrase": "There is a rusty key on the table. ",
-          "result": "You take the rusty key and put it in your pocket."
+          "result": "You take the rusty key and put it in your pocket.",
+          "triggers": ["tookKey", "usedKey"]
         }
       ]
     },
     {
       "name": "Cellar",
-      "description": "You are in the cellar. It is so cold...there's a letter on the ground",
+      "roomStates": [
+        {
+          "active": true,
+          "trigger": "default",
+          "description": "You are in the cellar. It is so cold...there's a letter on the ground."
+        },
+        {
+          "active": false,
+          "trigger": "tookLetter",
+          "description": "You are in the cellar. It is so cold...you can't see far into the darkness."
+        }
+      ],
       "hasPlayer": false,
       "connections": [{ "direction": "south", "room": "Foyer" }],
       "items": [
@@ -61,7 +107,8 @@
           "canTake": true,
           "itemName": "Letter",
           "canUseOn": "Cellar door",
-          "result": "It's a crumpled love note."
+          "result": "It's a crumpled love note.",
+          "triggers": ["tookLetter"]
         }
       ]
     }

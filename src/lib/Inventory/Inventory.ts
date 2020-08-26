@@ -18,7 +18,13 @@ export abstract class Inventory implements iInventory {
     findItem(passedItemArr: string[]): iItemPayload {
         const emptyItem = {
             hasItem: false,
-            item: { id: 0, itemName: '', result: '', descriptionPhrase: '' },
+            item: {
+                id: 0,
+                itemName: '',
+                result: '',
+                descriptionPhrase: '',
+                triggers: [''],
+            },
         };
 
         if (this.items.length <= 0) {

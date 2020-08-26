@@ -9,9 +9,10 @@ describe('ItemHolder class', () => {
                     id: 66,
                     itemName: 'Pencil',
                     canTake: true,
-                    canUseOn: [''],
+                    canUseOn: '',
                     result: 'You write your name!',
                     descriptionPhrase: 'It is on the table. ',
+                    triggers: ['bigParty'],
                 },
             ];
 
@@ -22,7 +23,6 @@ describe('ItemHolder class', () => {
             }
             const testInstance = new TestClass(mockInventory);
             const result = testInstance.findItem(['the', 'Pencil']);
-            console.log(result);
 
             expect(result.hasItem).toBe(true);
         });

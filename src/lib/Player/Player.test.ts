@@ -8,9 +8,10 @@ const mockPlayerPayload: iPlayerPayload = {
             id: 66,
             itemName: 'Pencil',
             canTake: true,
-            canUseOn: [''],
+            canUseOn: '',
             result: 'You write your name!',
-            descriptionPhrase: 'It is on the table.',
+            descriptionPhrase: 'It is on the table. ',
+            triggers: ['bigParty'],
         },
     ],
 };
