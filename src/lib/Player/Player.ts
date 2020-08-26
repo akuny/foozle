@@ -1,23 +1,16 @@
-import { iItem, iPlayer } from '../../ts/interfaces';
+import { iPlayer, iPlayerPayload } from '../../ts/interfaces';
+import Inventory from '../Inventory';
 
-export class Player {
+export class Player implements iPlayer {
     alive: boolean;
-    inventory: iItem[];
+    inventory: Inventory;
 
-    constructor(player: iPlayer) {
+    constructor(player: iPlayerPayload) {
         this.alive = player.alive;
-        this.inventory = player.inventory;
+        this.inventory = new Inventory(player.inventory);
     }
 
     hasInInventory(itemNames: string[]) {
-        let hasItem = false;
-        itemNames.forEach((itemName) => {
-            this.inventory.find((itemObj) => {
-                if (itemObj.itemName.toLowerCase() === itemName) {
-                    hasItem = true;
-                }
-            });
-        });
-        return hasItem;
+        return this.inventory.hasItem(itemNames);
     }
 }

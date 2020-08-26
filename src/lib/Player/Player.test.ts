@@ -1,28 +1,21 @@
 import { Player } from './Player';
-import { iPlayer } from '../../ts/interfaces';
+import { iPlayerPayload } from '../../ts/interfaces';
+
+const mockPlayerPayload: iPlayerPayload = {
+    alive: true,
+    inventory: [
+        {
+            id: 66,
+            itemName: 'Pencil',
+            canTake: true,
+            canUseOn: [''],
+            result: 'You write your name!',
+        },
+    ],
+};
 
 describe('Player class', () => {
-    describe('hasInInventory() method', () => {
-        test('Returns true if item is in inventory', () => {
-            const playerArgument: iPlayer = {
-                alive: true,
-                inventory: [
-                    {
-                        id: 66,
-                        canTake: true,
-                        canUseOn: [''],
-                        itemName: 'Pencil',
-                        result: 'You write your name!',
-                    },
-                ],
-            };
-            const testPlayer = new Player(playerArgument);
-            expect(testPlayer.hasInInventory(['the', 'pencil'])).toBe(true);
-        });
-        test('', () => {});
-    });
-    describe(' method', () => {
-        test('', () => {});
-        test('', () => {});
+    test('Is not undefined', () => {
+        expect(new Player(mockPlayerPayload)).toBeDefined();
     });
 });

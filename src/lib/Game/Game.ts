@@ -89,8 +89,11 @@ export class Game {
         return 'take that item';
     }
 
-    private useItem(item: string[]) {
-        if (this.player.hasInInventory(item)) {
+    private useItem(items: string[]) {
+        if (
+            this.player.hasInInventory(items) ||
+            this.currentRoom.hasInInventory(items)
+        ) {
             console.log('gotteem');
         }
 
@@ -101,6 +104,6 @@ export class Game {
         check if item is in current Room's canUse array
             if yes, retrive _result_ from item's object in canUse array
         */
-        return `You are using ${item}`;
+        return `You are using ${items}`;
     }
 }

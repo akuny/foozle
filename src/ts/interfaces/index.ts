@@ -10,8 +10,12 @@ export interface iCommandPayload {
 }
 
 export interface iDisk {
-    player: iPlayer;
+    player: iPlayerPayload;
     rooms: iRoom[];
+}
+
+export interface iInventory {
+    hasItem(itemNames: string[]): boolean;
 }
 
 export interface iItem {
@@ -23,6 +27,12 @@ export interface iItem {
 }
 
 export interface iPlayer {
+    alive: boolean;
+    inventory: iInventory;
+    hasInInventory(itemNames: string[]): boolean;
+}
+
+export interface iPlayerPayload {
     alive: boolean;
     inventory: iItem[];
 }
