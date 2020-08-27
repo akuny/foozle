@@ -31,14 +31,9 @@ export abstract class Inventory implements iInventory {
             return emptyItem;
         }
 
-        const lowerCaseItemArr = passedItemArr.map((name) => {
-            return name.toLowerCase().trim();
-        });
-
+        // TODO clean up
         const [result] = this.items.filter((item) => {
-            return lowerCaseItemArr.includes(
-                item.itemName.toLowerCase().trim()
-            );
+            return passedItemArr.includes(item.itemName);
         });
 
         if (typeof result !== 'undefined') {
@@ -48,12 +43,13 @@ export abstract class Inventory implements iInventory {
     }
 
     addItem(itemToAdd: iItem) {
-        this.items.push(itemToAdd);
+        return this.items.push(itemToAdd);
     }
 
     removeItem(itemToRemove: iItem): iItem[] {
+        //TODO clean up
         return this.items.filter((item) => {
-            item.itemName !== itemToRemove.itemName;
+            return item.itemName !== itemToRemove.itemName;
         });
     }
 }

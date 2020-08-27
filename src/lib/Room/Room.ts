@@ -16,6 +16,7 @@ export class Room extends Inventory {
         this.inactiveRoomStates = room.roomStates.filter((obj) => {
             return obj.active === false;
         });
+        //TODO clean up
         const [current] = room.roomStates.filter((obj) => {
             return obj.active;
         });
@@ -28,6 +29,7 @@ export class Room extends Inventory {
     }
 
     changeCurrentRoomState(triggerArr: string[]) {
+        // TODO clean up
         const [matchingTrigger] = triggerArr.filter((str) => {
             return this.inactiveRoomStates.filter((roomState) => {
                 return roomState.trigger === str;
@@ -35,6 +37,7 @@ export class Room extends Inventory {
         });
 
         if (typeof matchingTrigger !== 'undefined') {
+            // TODO clean up
             const [newState] = this.inactiveRoomStates.filter((obj) => {
                 return obj.trigger === matchingTrigger;
             });
@@ -44,6 +47,7 @@ export class Room extends Inventory {
     }
 
     hasConnection(direction: string) {
+        // TODO clean up
         let result = this.connections.filter((obj) => {
             return obj.direction === direction;
         });
