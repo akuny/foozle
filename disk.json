@@ -7,6 +7,12 @@
   "rooms": [
     {
       "name": "Foyer",
+      "hasPlayer": true,
+      "connections": [
+        { "direction": "east", "room": "Dining Room", "locked": false },
+        { "direction": "west", "room": "Living Room", "locked": false },
+        { "direction": "north", "room": "Cellar", "locked": true }
+      ],
       "roomStates": [
         {
           "active": true,
@@ -19,16 +25,14 @@
           "description": "You are in the foyer of a small white house. You can go east to the dining room or west to the living room. There is a cellar door to your north; you opened it with a rusky key."
         }
       ],
-      "hasPlayer": true,
-      "connections": [
-        { "direction": "east", "room": "Dining Room", "locked": false },
-        { "direction": "west", "room": "Living Room", "locked": false },
-        { "direction": "north", "room": "Cellar", "locked": true }
-      ],
       "items": []
     },
     {
       "name": "Living Room",
+      "hasPlayer": false,
+      "connections": [
+        { "direction": "east", "room": "Foyer", "locked": false }
+      ],
       "roomStates": [
         {
           "active": true,
@@ -40,10 +44,6 @@
           "trigger": "playedMusic",
           "description": "You are in the tidy living room. The piano is playing a sad tune on its own. You can go east to the foyer."
         }
-      ],
-      "hasPlayer": false,
-      "connections": [
-        { "direction": "east", "room": "Foyer", "locked": false }
       ],
       "items": [
         {
@@ -57,6 +57,10 @@
     },
     {
       "name": "Dining Room",
+      "hasPlayer": false,
+      "connections": [
+        { "direction": "west", "room": "Foyer", "locked": false }
+      ],
       "roomStates": [
         {
           "active": true,
@@ -68,10 +72,6 @@
           "trigger": "tookKey",
           "description": "You are in the dining room. The table is set for a lavish meal. You can go west to the foyer."
         }
-      ],
-      "hasPlayer": false,
-      "connections": [
-        { "direction": "west", "room": "Foyer", "locked": false }
       ],
       "items": [
         {
@@ -87,6 +87,8 @@
     },
     {
       "name": "Cellar",
+      "hasPlayer": false,
+      "connections": [{ "direction": "south", "room": "Foyer" }],
       "roomStates": [
         {
           "active": true,
@@ -99,8 +101,6 @@
           "description": "You are in the cellar. It is so cold...you can't see far into the darkness."
         }
       ],
-      "hasPlayer": false,
-      "connections": [{ "direction": "south", "room": "Foyer" }],
       "items": [
         {
           "id": 3,
