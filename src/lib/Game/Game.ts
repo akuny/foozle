@@ -1,4 +1,4 @@
-import { iCommandPayload, iDisk } from '../../ts/interfaces';
+import { iCommandPayload, iDisk, iRoom } from '../../ts/interfaces';
 import Player from '../Player';
 import Room from '../Room';
 
@@ -10,7 +10,14 @@ export class Game {
     constructor(disk: iDisk) {
         this.player = new Player(disk.player);
 
-        disk.rooms.forEach((obj) => {
+        const cleanDisk = JSON.parse(
+            JSON.stringify(disk, (key, value) => {
+                return typeof value === 'string' && key !== 'description'
+                    ? value.toLowerCase()
+                    : value;
+            })
+        );
+        cleanDisk.rooms.forEach((obj: iRoom) => {
             obj.hasPlayer
                 ? (this.currentRoom = new Room(obj))
                 : this.otherRooms.push(new Room(obj));
@@ -59,37 +66,37 @@ export class Game {
     private movePlayer(direction: string): string {
         let result = this.currentRoom.hasConnection(direction);
 
-        if (result.hasRoom) {
-            let roomSearchResult = this.otherRooms.find((room) => {
-                return room.name === result.newRoom;
-            });
-
-            let newRoom: Room;
-
-            if (roomSearchResult !== undefined) {
-                newRoom = roomSearchResult;
-            } else {
-                newRoom = this.currentRoom;
-            }
-
-            newRoom.hasPlayer = true;
-            this.currentRoom.hasPlayer = false;
-
-            this.otherRooms.push(this.currentRoom);
-
-            const newOtherRooms = (this.otherRooms = this.otherRooms.filter(
-                (room) => {
-                    return room.name !== result.newRoom;
-                }
-            ));
-
-            this.otherRooms = newOtherRooms;
-            this.currentRoom = newRoom;
-
-            return this.currentRoom.showCurrentRoomState();
-        } else {
+        if (!result.hasRoom) {
             return 'Hmm, you can\'t go that way...';
         }
+
+        let roomSearchResult = this.otherRooms.find((room) => {
+            return room.name === result.newRoom;
+        });
+
+        let newRoom: Room;
+
+        if (roomSearchResult) {
+            newRoom = roomSearchResult;
+        } else {
+            newRoom = this.currentRoom;
+        }
+
+        newRoom.hasPlayer = true;
+        this.currentRoom.hasPlayer = false;
+
+        this.otherRooms.push(this.currentRoom);
+
+        const newOtherRooms = (this.otherRooms = this.otherRooms.filter(
+            (room) => {
+                return room.name !== result.newRoom;
+            }
+        ));
+
+        this.otherRooms = newOtherRooms;
+        this.currentRoom = newRoom;
+
+        return this.currentRoom.showCurrentRoomState();
     }
 
     private takeItem(items: string[]) {
@@ -105,18 +112,11 @@ export class Game {
     }
 
     private useItem(items: string[]) {
-        if (this.player.findItem(items).hasItem) {
+        const result = this.player.findItem(items);
+        if (result.hasItem) {
+            this.currentRoom.changeCurrentRoomState(result.item.triggers);
+            return result.item.result;
         }
-
-        if (this.currentRoom.findItem(items).hasItem) {
-        }
-        /*
-        check if item is in player's inventory
-            if yes, check if it has an effect if used in current room (TODO expand game.json structure)
-        
-        check if item is in current Room's canUse array
-            if yes, retrive _result_ from item's object in canUse array
-        */
-        return `You are using ${items}`;
+        return 'You don\'t have one of those!';
     }
 }

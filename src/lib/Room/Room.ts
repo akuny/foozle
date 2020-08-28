@@ -16,7 +16,7 @@ export class Room extends Inventory {
         this.inactiveRoomStates = room.roomStates.filter((obj) => {
             return obj.active === false;
         });
-        //TODO clean up
+
         const [current] = room.roomStates.filter((obj) => {
             return obj.active;
         });
@@ -28,37 +28,53 @@ export class Room extends Inventory {
         return this.currentRoomState.description;
     }
 
-    changeCurrentRoomState(triggerArr: string[]) {
-        // TODO clean up
-        const [matchingTrigger] = triggerArr.filter((str) => {
-            return this.inactiveRoomStates.filter((roomState) => {
-                return roomState.trigger === str;
-            });
-        });
+    changeCurrentRoomState(triggers: string[]) {
+        let matchingTrigger = '';
 
-        if (typeof matchingTrigger !== 'undefined') {
-            // TODO clean up
-            const [newState] = this.inactiveRoomStates.filter((obj) => {
+        for (let i = 0; i < triggers.length; i++) {
+            for (let j = 0; j < this.inactiveRoomStates.length; j++) {
+                let storedObj = this.inactiveRoomStates[j];
+                if (triggers[i] === storedObj.trigger) {
+                    matchingTrigger = triggers[i];
+                    break;
+                }
+            }
+        }
+
+        if (matchingTrigger) {
+            let [newState] = this.inactiveRoomStates.filter((obj) => {
                 return obj.trigger === matchingTrigger;
             });
-            this.currentRoomState.active = false;
+
+            newState.active = true;
+
+            let oldState = Object.assign({}, this.currentRoomState);
+
+            oldState.active = false;
+
+            const updatedInactiveRoomStates = this.inactiveRoomStates.filter(
+                (obj) => {
+                    return obj.trigger !== matchingTrigger;
+                }
+            );
+
+            this.inactiveRoomStates = [oldState, ...updatedInactiveRoomStates];
             this.currentRoomState = newState;
         }
+
+        return;
     }
 
     hasConnection(direction: string) {
-        // TODO clean up
-        let result = this.connections.filter((obj) => {
+        const [matchingDirection] = this.connections.filter((obj) => {
             return obj.direction === direction;
         });
 
-        if (result.length > 0) {
-            let matchedDirection = result[0];
-
-            if (!matchedDirection.locked) {
+        if (matchingDirection) {
+            if (!matchingDirection.locked) {
                 return {
                     hasRoom: true,
-                    newRoom: matchedDirection.room,
+                    newRoom: matchingDirection.room,
                 };
             }
         }

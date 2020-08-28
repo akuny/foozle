@@ -21,7 +21,7 @@
         },
         {
           "active": false,
-          "trigger": "usedKey",
+          "trigger": "useKey",
           "description": "You are in the foyer of a small white house. You can go east to the dining room or west to the living room. There is a cellar door to your north; you opened it with a rusky key."
         }
       ],
@@ -41,7 +41,7 @@
         },
         {
           "active": false,
-          "trigger": "playedMusic",
+          "trigger": "playMusic",
           "description": "You are in the tidy living room. The piano is playing a sad tune on its own. You can go east to the foyer."
         }
       ],
@@ -51,7 +51,7 @@
           "canTake": false,
           "itemName": "Piano",
           "result": "You plink a sad melody. When you stop, the piano is still playing.",
-          "triggers": ["playedMusic"]
+          "triggers": ["playMusic"]
         }
       ]
     },
@@ -69,7 +69,7 @@
         },
         {
           "active": false,
-          "trigger": "tookKey",
+          "trigger": "takeKey",
           "description": "You are in the dining room. The table is set for a lavish meal. You can go west to the foyer."
         }
       ],
@@ -81,7 +81,7 @@
           "canUseOn": "Cellar door",
           "descriptionPhrase": "There is a rusty key on the table. ",
           "result": "You take the rusty key and put it in your pocket.",
-          "triggers": ["tookKey", "usedKey"]
+          "triggers": ["takeKey", "useKey"]
         }
       ]
     },
@@ -97,7 +97,7 @@
         },
         {
           "active": false,
-          "trigger": "tookLetter",
+          "trigger": "takeLetter",
           "description": "You are in the cellar. It is so cold...you can't see far into the darkness."
         }
       ],
@@ -108,7 +108,7 @@
           "itemName": "Letter",
           "canUseOn": "Cellar door",
           "result": "It's a crumpled love note.",
-          "triggers": ["tookLetter"]
+          "triggers": ["takeLetter"]
         }
       ]
     }

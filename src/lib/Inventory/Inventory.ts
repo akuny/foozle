@@ -12,6 +12,10 @@ export abstract class Inventory implements iInventory {
             return obj.itemName;
         });
 
+        if (names.length <= 1) {
+            return names[0];
+        }
+
         return names.join(', ');
     }
 
@@ -31,13 +35,12 @@ export abstract class Inventory implements iInventory {
             return emptyItem;
         }
 
-        // TODO clean up
-        const [result] = this.items.filter((item) => {
+        const [itemSearchResult] = this.items.filter((item) => {
             return passedItemArr.includes(item.itemName);
         });
 
-        if (typeof result !== 'undefined') {
-            return { hasItem: true, item: result };
+        if (itemSearchResult) {
+            return { hasItem: true, item: itemSearchResult };
         }
         return emptyItem;
     }
@@ -47,7 +50,6 @@ export abstract class Inventory implements iInventory {
     }
 
     removeItem(itemToRemove: iItem): iItem[] {
-        //TODO clean up
         return this.items.filter((item) => {
             return item.itemName !== itemToRemove.itemName;
         });
