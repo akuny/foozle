@@ -21,11 +21,12 @@ export interface iInventory {
 
 export interface iItem {
     id: number;
-    result: string;
     itemName: string;
-    descriptionPhrase: string;
-    canTake?: boolean;
-    canUseOn?: string;
+    canTake: boolean;
+    isKey: boolean;
+    canUseIn: string;
+    result: string;
+    descriptionPhrase?: string;
     triggers: string[];
 }
 
@@ -41,10 +42,9 @@ export interface iPlayerPayload {
 
 export interface iRoom {
     name: string;
-    roomStates: iRoomState[];
-    currentRoomState?: iRoomState;
     hasPlayer: boolean;
     connections: iRoomConnection[];
+    roomStates: iRoomState[];
     items: iItem[];
 }
 

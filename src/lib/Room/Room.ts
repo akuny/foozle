@@ -1,5 +1,5 @@
 import Inventory from '../Inventory';
-import { iRoomState, iRoom, iRoomConnection } from '../../ts/interfaces';
+import { iItem, iRoomState, iRoom, iRoomConnection } from '../../ts/interfaces';
 
 export class Room extends Inventory {
     name: string;
@@ -28,9 +28,10 @@ export class Room extends Inventory {
         return this.currentRoomState.description;
     }
 
-    changeCurrentRoomState(triggers: string[]) {
+    changeCurrentRoomState(item: iItem) {
         let matchingTrigger = '';
 
+        const { triggers, isKey } = item;
         for (let i = 0; i < triggers.length; i++) {
             for (let j = 0; j < this.inactiveRoomStates.length; j++) {
                 let storedObj = this.inactiveRoomStates[j];
@@ -41,33 +42,37 @@ export class Room extends Inventory {
             }
         }
 
-        if (matchingTrigger) {
-            let [newState] = this.inactiveRoomStates.filter((obj) => {
-                return obj.trigger === matchingTrigger;
-            });
-
-            newState.active = true;
-
-            let oldState = Object.assign({}, this.currentRoomState);
-
-            oldState.active = false;
-
-            const updatedInactiveRoomStates = this.inactiveRoomStates.filter(
-                (obj) => {
-                    return obj.trigger !== matchingTrigger;
-                }
-            );
-
-            this.inactiveRoomStates = [oldState, ...updatedInactiveRoomStates];
-            this.currentRoomState = newState;
+        if (!matchingTrigger) {
+            return false;
         }
 
-        return;
+        let [newState] = this.inactiveRoomStates.filter((obj) => {
+            return obj.trigger === matchingTrigger;
+        });
+
+        newState.active = true;
+
+        let oldState = Object.assign({}, this.currentRoomState);
+
+        oldState.active = false;
+
+        const updatedInactiveRoomStates = this.inactiveRoomStates.filter(
+            (obj) => {
+                return obj.trigger !== matchingTrigger;
+            }
+        );
+
+        if (isKey) {
+            this.unlockConnection(item);
+        }
+
+        this.inactiveRoomStates = [oldState, ...updatedInactiveRoomStates];
+        return (this.currentRoomState = newState);
     }
 
     hasConnection(direction: string) {
-        const [matchingDirection] = this.connections.filter((obj) => {
-            return obj.direction === direction;
+        const [matchingDirection] = this.connections.filter((connection) => {
+            return connection.direction === direction;
         });
 
         if (matchingDirection) {
@@ -80,5 +85,14 @@ export class Room extends Inventory {
         }
 
         return { hasRoom: false, newRoom: null };
+    }
+
+    private unlockConnection(item: iItem) {
+        const updatedConnections = this.connections.map((connection) => {
+            connection.locked = false;
+            return connection;
+        });
+
+        this.connections = updatedConnections;
     }
 }

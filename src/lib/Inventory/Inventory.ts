@@ -25,6 +25,9 @@ export abstract class Inventory implements iInventory {
             item: {
                 id: 0,
                 itemName: '',
+                canTake: false,
+                isKey: false,
+                canUseIn: '',
                 result: '',
                 descriptionPhrase: '',
                 triggers: [''],

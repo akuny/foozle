@@ -105,7 +105,7 @@ export class Game {
         if (result.hasItem) {
             this.currentRoom.removeItem(result.item);
             this.player.addItem(result.item);
-            this.currentRoom.changeCurrentRoomState(result.item.triggers);
+            this.currentRoom.changeCurrentRoomState(result.item);
             return result.item.result;
         }
         return 'I don\'t think you can pick that up.';
@@ -114,7 +114,7 @@ export class Game {
     private useItem(items: string[]) {
         const result = this.player.findItem(items);
         if (result.hasItem) {
-            this.currentRoom.changeCurrentRoomState(result.item.triggers);
+            this.currentRoom.changeCurrentRoomState(result.item);
             return result.item.result;
         }
         return 'You don\'t have one of those!';

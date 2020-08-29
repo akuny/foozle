@@ -22,7 +22,7 @@
         {
           "active": false,
           "trigger": "useKey",
-          "description": "You are in the foyer of a small white house. You can go east to the dining room or west to the living room. There is a cellar door to your north; you opened it with a rusky key."
+          "description": "You are in the foyer of a small white house. You can go east to the dining room or west to the living room. There is a cellar door to your north; you opened it with a rusty key."
         }
       ],
       "items": []
@@ -48,8 +48,10 @@
       "items": [
         {
           "id": 1,
-          "canTake": false,
           "itemName": "Piano",
+          "canTake": false,
+          "isKey": false,
+          "canUseIn": "Living Room",
           "result": "You plink a sad melody. When you stop, the piano is still playing.",
           "triggers": ["playMusic"]
         }
@@ -76,9 +78,10 @@
       "items": [
         {
           "id": 2,
-          "canTake": true,
           "itemName": "Key",
-          "canUseOn": "Cellar door",
+          "canTake": true,
+          "isKey": true,
+          "canUseIn": "Foyer",
           "descriptionPhrase": "There is a rusty key on the table. ",
           "result": "You take the rusty key and put it in your pocket.",
           "triggers": ["takeKey", "useKey"]
@@ -88,7 +91,9 @@
     {
       "name": "Cellar",
       "hasPlayer": false,
-      "connections": [{ "direction": "south", "room": "Foyer" }],
+      "connections": [
+        { "direction": "south", "room": "Foyer", "locked": false }
+      ],
       "roomStates": [
         {
           "active": true,
@@ -104,11 +109,13 @@
       "items": [
         {
           "id": 3,
-          "canTake": true,
           "itemName": "Letter",
-          "canUseOn": "Cellar door",
-          "result": "It's a crumpled love note.",
-          "triggers": ["takeLetter"]
+          "canTake": true,
+          "isKey": false,
+          "canUseIn": "Living room",
+          "descriptionPhrase": "It's a sad story. A face appears in the mirror...",
+          "result": "It's a sad story. A face appears in the mirror...",
+          "triggers": ["takeLetter", "readLetter"]
         }
       ]
     }
