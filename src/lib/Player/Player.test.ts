@@ -6,13 +6,14 @@ const mockPlayerPayload: iPlayerPayload = {
     inventory: [
         {
             id: 2,
-            itemName: 'Key',
-            canTake: true,
+            itemName: 'key',
             isKey: true,
-            canUseIn: 'Foyer',
-            descriptionPhrase: 'There is a rusty key on the table. ',
-            result: 'You take the rusty key and put it in your pocket.',
-            triggers: ['takeKey', 'useKey'],
+            canTake: true,
+            canUse: true,
+            canUseIn: 'foyer',
+            takeResult: 'You take the rusty key and put it in your pocket.',
+            useResult: 'You unlock the cellar',
+            triggers: ['takekey', 'usekey'],
         },
     ],
 };

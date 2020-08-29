@@ -12,7 +12,10 @@ export class Game {
 
         const cleanDisk = JSON.parse(
             JSON.stringify(disk, (key, value) => {
-                return typeof value === 'string' && key !== 'description'
+                return typeof value === 'string' &&
+                    key !== 'description' &&
+                    key !== 'takeResult' &&
+                    key !== 'userResult'
                     ? value.toLowerCase()
                     : value;
             })
@@ -106,7 +109,7 @@ export class Game {
             this.currentRoom.removeItem(result.item);
             this.player.addItem(result.item);
             this.currentRoom.changeCurrentRoomState(result.item);
-            return result.item.result;
+            return result.item.takeResult;
         }
         return 'I don\'t think you can pick that up.';
     }
@@ -115,7 +118,7 @@ export class Game {
         const result = this.player.findItem(items);
         if (result.hasItem) {
             this.currentRoom.changeCurrentRoomState(result.item);
-            return result.item.result;
+            return result.item.useResult;
         }
         return 'You don\'t have one of those!';
     }

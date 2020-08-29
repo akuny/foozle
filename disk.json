@@ -49,10 +49,12 @@
         {
           "id": 1,
           "itemName": "Piano",
-          "canTake": false,
           "isKey": false,
+          "canTake": false,
+          "canUse": true,
           "canUseIn": "Living Room",
-          "result": "You plink a sad melody. When you stop, the piano is still playing.",
+          "takeResult": "",
+          "useResult": "You plink a sad melody. When you stop, the piano is still playing.",
           "triggers": ["playMusic"]
         }
       ]
@@ -79,11 +81,12 @@
         {
           "id": 2,
           "itemName": "Key",
-          "canTake": true,
           "isKey": true,
+          "canTake": true,
+          "canUse": true,
           "canUseIn": "Foyer",
-          "descriptionPhrase": "There is a rusty key on the table. ",
-          "result": "You take the rusty key and put it in your pocket.",
+          "takeResult": "You take the rusty key and put it in your pocket.",
+          "useResult": "You unlock the cellar door.",
           "triggers": ["takeKey", "useKey"]
         }
       ]
@@ -110,11 +113,12 @@
         {
           "id": 3,
           "itemName": "Letter",
-          "canTake": true,
           "isKey": false,
+          "canTake": true,
+          "canUse": true,
           "canUseIn": "Living room",
-          "descriptionPhrase": "It's a sad story. A face appears in the mirror...",
-          "result": "It's a sad story. A face appears in the mirror...",
+          "takeResult": "You pick up the crumpled letter",
+          "useResult": "It's a sad love letter. A face appears in the mirror...",
           "triggers": ["takeLetter", "readLetter"]
         }
       ]

@@ -8,11 +8,12 @@ describe('ItemHolder class', () => {
                 {
                     id: 66,
                     itemName: 'Pencil',
-                    canTake: true,
                     isKey: false,
+                    canTake: true,
+                    canUse: true,
                     canUseIn: '',
-                    result: 'You write your name!',
-                    descriptionPhrase: 'It is on the table. ',
+                    takeResult: 'You pick up the pencil',
+                    useResult: 'You write your name',
                     triggers: ['bigParty'],
                 },
             ];

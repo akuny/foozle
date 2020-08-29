@@ -22,11 +22,12 @@ export interface iInventory {
 export interface iItem {
     id: number;
     itemName: string;
-    canTake: boolean;
     isKey: boolean;
+    canTake: boolean;
+    canUse: boolean;
     canUseIn: string;
-    result: string;
-    descriptionPhrase?: string;
+    takeResult: string;
+    useResult: string;
     triggers: string[];
 }
 
