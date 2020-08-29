@@ -107,7 +107,7 @@ export class Game implements iGame {
     private takeItem(items: string[]) {
         const result = this.currentRoom.findItem(items);
 
-        if (result.hasItem) {
+        if (result.hasItem && result.item.canTake) {
             this.currentRoom.removeItem(result.item);
             this.player.addItem(result.item);
             this.currentRoom.changeCurrentRoomState(result.item);
@@ -117,15 +117,15 @@ export class Game implements iGame {
     }
 
     private useItem(items: string[]) {
-        const playerHasItem = this.player.findItem(items);
-        if (playerHasItem.hasItem) {
-            this.currentRoom.changeCurrentRoomState(playerHasItem.item);
-            return playerHasItem.item.useResult;
+        const playerSearchResult = this.player.findItem(items);
+        if (playerSearchResult.hasItem && playerSearchResult.item.canUse) {
+            this.currentRoom.changeCurrentRoomState(playerSearchResult.item);
+            return playerSearchResult.item.useResult;
         }
-        const roomHasItem = this.currentRoom.findItem(items);
-        if (roomHasItem.hasItem) {
-            this.currentRoom.changeCurrentRoomState(roomHasItem.item);
-            return roomHasItem.item.useResult;
+        const roomSearchResult = this.currentRoom.findItem(items);
+        if (roomSearchResult.hasItem && roomSearchResult.item.canUse) {
+            this.currentRoom.changeCurrentRoomState(roomSearchResult.item);
+            return roomSearchResult.item.useResult;
         }
         return 'You don\'t have one of those!';
     }

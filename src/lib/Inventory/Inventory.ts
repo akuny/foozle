@@ -14,7 +14,7 @@ export abstract class Inventory implements iInventory {
         });
 
         if (names.length <= 1) {
-            return names[0];
+            return "You don't have anything in your pockets";
         }
 
         return names.join(', ');
@@ -30,8 +30,8 @@ export abstract class Inventory implements iInventory {
                 canTake: false,
                 canUse: true,
                 canUseIn: '',
-                takeResult: '',
-                useResult: '',
+                takeResult: "You can't take that!",
+                useResult: "You can't use that!",
                 triggers: [''],
             },
         };
