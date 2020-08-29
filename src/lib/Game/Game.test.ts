@@ -20,8 +20,7 @@ describe('Game class', () => {
         });
         test('', () => {});
     });
-    describe(' method', () => {
-        test('', () => {});
+    describe('update() method', () => {
         test('', () => {});
     });
 });

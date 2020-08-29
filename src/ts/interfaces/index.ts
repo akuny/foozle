@@ -14,6 +14,11 @@ export interface iDisk {
     rooms: iRoom[];
 }
 
+export interface iDisplay {
+    render(description: string): void;
+    turnOn(description: string): void;
+}
+
 export interface iInventory {
     findItem(itemNames: string[]): object;
     removeItem(itemToRemove: iItem): iItem[];
@@ -34,6 +39,14 @@ export interface iItem {
 export interface iItemPayload {
     hasItem: boolean;
     item: iItem;
+}
+
+export interface iGame {
+    getCurrentRoom(): string;
+    update(
+        command: iCommandPayload,
+        cb: (game: iGame, output: string) => void
+    ): void;
 }
 
 export interface iPlayerPayload {

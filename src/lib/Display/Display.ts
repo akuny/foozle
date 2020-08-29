@@ -1,6 +1,7 @@
+import { iDisplay } from '../../ts/interfaces';
 import App from '../App';
 
-export class Display {
+export class Display implements iDisplay {
     app: App;
     target: HTMLDivElement;
     commandLine: HTMLFormElement;

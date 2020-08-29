@@ -1,8 +1,8 @@
-import { iCommandPayload, iDisk, iRoom } from '../../ts/interfaces';
+import { iCommandPayload, iDisk, iGame, iRoom } from '../../ts/interfaces';
 import Player from '../Player';
 import Room from '../Room';
 
-export class Game {
+export class Game implements iGame {
     currentRoom!: Room;
     otherRooms: Room[] = [];
     player: Player;
@@ -34,7 +34,7 @@ export class Game {
     update(
         command: iCommandPayload,
         callback: (game: Game, output: string) => void
-    ) {
+    ): void {
         let output = '';
         let { type, action, items } = command;
 
