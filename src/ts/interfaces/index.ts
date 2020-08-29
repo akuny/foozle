@@ -1,12 +1,12 @@
 import { Item } from '../types';
 
 export interface iCommand {
-    isValid(): boolean;
     getPayload(): {
         type: string;
         action: string;
         items: string[];
     };
+    isValid(): boolean;
 }
 
 export interface iDisk {
@@ -34,7 +34,7 @@ export interface iPlayer extends iInventory {
 }
 
 export interface iRoom extends iInventory {
-    changeCurrentRoomState(item: Item): void;
-    showCurrentRoomState(): string;
     hasConnection(direction: string): { hasRoom: boolean; newRoom: string };
+    showCurrentRoomState(): string;
+    updateCurrentRoomState(item: Item): void;
 }

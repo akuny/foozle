@@ -29,7 +29,7 @@ export class Room extends Inventory implements iRoom {
         return this.currentRoomState.description;
     }
 
-    changeCurrentRoomState(item: Item): void {
+    updateCurrentRoomState(item: Item): void {
         let matchingTrigger = '';
 
         const { triggers, isKey } = item;
