@@ -1,4 +1,5 @@
-import { iCommandPayload, iDisk, iGame, iRoom } from '../../ts/interfaces';
+import { iCommand, iDisk, iGame } from '../../ts/interfaces';
+import { RoomTemplate } from '../../ts/types';
 import Player from '../Player';
 import Room from '../Room';
 
@@ -8,8 +9,6 @@ export class Game implements iGame {
     player: Player;
 
     constructor(disk: iDisk) {
-        this.player = new Player(disk.player);
-
         const cleanDisk = JSON.parse(
             JSON.stringify(disk, (key, value) => {
                 return typeof value === 'string' &&
@@ -20,7 +19,10 @@ export class Game implements iGame {
                     : value;
             })
         );
-        cleanDisk.rooms.forEach((obj: iRoom) => {
+
+        this.player = new Player(cleanDisk.player);
+
+        cleanDisk.rooms.forEach((obj: RoomTemplate) => {
             obj.hasPlayer
                 ? (this.currentRoom = new Room(obj))
                 : this.otherRooms.push(new Room(obj));
@@ -32,11 +34,11 @@ export class Game implements iGame {
     }
 
     update(
-        command: iCommandPayload,
+        command: iCommand,
         callback: (game: Game, output: string) => void
     ): void {
         let output = '';
-        let { type, action, items } = command;
+        let { type, action, items } = command.getPayload();
 
         switch (type) {
             case 'move':

@@ -1,4 +1,4 @@
-import { iCommandPayload, iDisk } from '../../ts/interfaces';
+import { iCommand, iDisk } from '../../ts/interfaces';
 import Command from '../Command';
 import Display from '../Display';
 import Game from '../Game';
@@ -22,13 +22,13 @@ export class App {
         let command = new Command(userInput);
 
         if (command.isValid()) {
-            return this.updateGame(command.getPayload());
+            return this.updateGame(command);
         }
 
         return this.display.render("That's an invalid command, amigo");
     }
 
-    private updateGame(command: iCommandPayload) {
+    private updateGame(command: iCommand) {
         this.gameState.update(command, (newGamestate, output) => {
             this.gameState = newGamestate;
             return this.display.render(output);

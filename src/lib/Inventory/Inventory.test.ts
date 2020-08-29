@@ -1,10 +1,10 @@
 import { Inventory } from './Inventory';
-import { iItem } from '../../ts/interfaces';
+import { Item } from '../../ts/types';
 
 describe('ItemHolder class', () => {
     describe('findItem() method', () => {
         test('Returns true if item is in inventory', () => {
-            const mockInventory: iItem[] = [
+            const mockInventory: Item[] = [
                 {
                     id: 66,
                     itemName: 'Pencil',
@@ -19,7 +19,7 @@ describe('ItemHolder class', () => {
             ];
 
             class TestClass extends Inventory {
-                constructor(inventoryArr: iItem[]) {
+                constructor(inventoryArr: Item[]) {
                     super(inventoryArr);
                 }
             }

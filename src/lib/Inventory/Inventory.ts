@@ -1,9 +1,10 @@
-import { iInventory, iItem, iItemPayload } from '../../ts/interfaces';
+import { iInventory } from '../../ts/interfaces';
+import { Item } from '../../ts/types';
 
 export abstract class Inventory implements iInventory {
-    items: iItem[];
+    items: Item[];
 
-    constructor(itemArr: iItem[]) {
+    constructor(itemArr: Item[]) {
         this.items = itemArr;
     }
 
@@ -19,7 +20,7 @@ export abstract class Inventory implements iInventory {
         return names.join(', ');
     }
 
-    findItem(passedItemArr: string[]): iItemPayload {
+    findItem(passedItemArr: string[]): { hasItem: boolean; item: Item } {
         const emptyItem = {
             hasItem: false,
             item: {
@@ -49,11 +50,11 @@ export abstract class Inventory implements iInventory {
         return emptyItem;
     }
 
-    addItem(itemToAdd: iItem) {
+    addItem(itemToAdd: Item) {
         return this.items.push(itemToAdd);
     }
 
-    removeItem(itemToRemove: iItem): iItem[] {
+    removeItem(itemToRemove: Item): Item[] {
         return this.items.filter((item) => {
             return item.itemName !== itemToRemove.itemName;
         });

@@ -1,14 +1,15 @@
+import { iRoom } from '../../ts/interfaces';
+import { Item, RoomConnection, RoomState, RoomTemplate } from '../../ts/types';
 import Inventory from '../Inventory';
-import { iItem, iRoomState, iRoom, iRoomConnection } from '../../ts/interfaces';
 
-export class Room extends Inventory {
+export class Room extends Inventory implements iRoom {
     name: string;
-    inactiveRoomStates: iRoomState[];
-    currentRoomState: iRoomState;
+    inactiveRoomStates: RoomState[];
+    currentRoomState: RoomState;
     hasPlayer: boolean;
-    connections: iRoomConnection[];
+    connections: RoomConnection[];
 
-    constructor(room: iRoom) {
+    constructor(room: RoomTemplate) {
         super(room.items);
         this.name = room.name;
         this.hasPlayer = room.hasPlayer;
@@ -28,7 +29,7 @@ export class Room extends Inventory {
         return this.currentRoomState.description;
     }
 
-    changeCurrentRoomState(item: iItem) {
+    changeCurrentRoomState(item: Item): void {
         let matchingTrigger = '';
 
         const { triggers, isKey } = item;
@@ -43,7 +44,7 @@ export class Room extends Inventory {
         }
 
         if (!matchingTrigger) {
-            return false;
+            return;
         }
 
         let [newState] = this.inactiveRoomStates.filter((obj) => {
@@ -67,7 +68,7 @@ export class Room extends Inventory {
         }
 
         this.inactiveRoomStates = [oldState, ...updatedInactiveRoomStates];
-        return (this.currentRoomState = newState);
+        this.currentRoomState = newState;
     }
 
     hasConnection(direction: string) {
@@ -84,10 +85,10 @@ export class Room extends Inventory {
             }
         }
 
-        return { hasRoom: false, newRoom: null };
+        return { hasRoom: false, newRoom: '' };
     }
 
-    private unlockConnection(item: iItem) {
+    private unlockConnection(item: Item) {
         const updatedConnections = this.connections.map((connection) => {
             connection.locked = false;
             return connection;

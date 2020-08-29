@@ -1,4 +1,5 @@
-import { iCommand, iCommandPayload } from '../../ts/interfaces';
+import { iCommand } from '../../ts/interfaces';
+
 import {
     validMovementCommands,
     validUseCommands,
@@ -37,7 +38,7 @@ export class Command implements iCommand {
         return this.valid;
     }
 
-    getPayload(): iCommandPayload {
+    getPayload(): { type: string; action: string; items: string[] } {
         return {
             type: this.type,
             action: this.action,

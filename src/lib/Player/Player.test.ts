@@ -1,7 +1,6 @@
 import { Player } from './Player';
-import { iPlayerPayload } from '../../ts/interfaces';
 
-const mockPlayerPayload: iPlayerPayload = {
+const mockPlayerPayload = {
     alive: true,
     inventory: [
         {

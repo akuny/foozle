@@ -1,10 +1,11 @@
+import { iPlayer } from '../../ts/interfaces';
+import { Item } from '../../ts/types';
 import Inventory from '../Inventory';
-import { iPlayerPayload } from '../../ts/interfaces';
 
-export class Player extends Inventory {
+export class Player extends Inventory implements iPlayer {
     alive: boolean;
 
-    constructor(player: iPlayerPayload) {
+    constructor(player: { alive: boolean; inventory: Item[] }) {
         super(player.inventory);
         this.alive = player.alive;
     }
