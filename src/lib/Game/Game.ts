@@ -15,7 +15,7 @@ export class Game {
                 return typeof value === 'string' &&
                     key !== 'description' &&
                     key !== 'takeResult' &&
-                    key !== 'userResult'
+                    key !== 'useResult'
                     ? value.toLowerCase()
                     : value;
             })
@@ -115,10 +115,15 @@ export class Game {
     }
 
     private useItem(items: string[]) {
-        const result = this.player.findItem(items);
-        if (result.hasItem) {
-            this.currentRoom.changeCurrentRoomState(result.item);
-            return result.item.useResult;
+        const playerHasItem = this.player.findItem(items);
+        if (playerHasItem.hasItem) {
+            this.currentRoom.changeCurrentRoomState(playerHasItem.item);
+            return playerHasItem.item.useResult;
+        }
+        const roomHasItem = this.currentRoom.findItem(items);
+        if (roomHasItem.hasItem) {
+            this.currentRoom.changeCurrentRoomState(roomHasItem.item);
+            return roomHasItem.item.useResult;
         }
         return 'You don\'t have one of those!';
     }
