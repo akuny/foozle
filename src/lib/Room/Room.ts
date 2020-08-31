@@ -25,6 +25,23 @@ export class Room extends Inventory implements iRoom {
         this.currentRoomState = current;
     }
 
+    hasConnection(direction: string) {
+        const [matchingDirection] = this.connections.filter((connection) => {
+            return connection.direction === direction;
+        });
+
+        if (matchingDirection) {
+            if (!matchingDirection.locked) {
+                return {
+                    hasRoom: true,
+                    newRoom: matchingDirection.room,
+                };
+            }
+        }
+
+        return { hasRoom: false, newRoom: '' };
+    }
+
     showCurrentRoomState(): string {
         return this.currentRoomState.description;
     }
@@ -69,23 +86,6 @@ export class Room extends Inventory implements iRoom {
 
         this.inactiveRoomStates = [oldState, ...updatedInactiveRoomStates];
         this.currentRoomState = newState;
-    }
-
-    hasConnection(direction: string) {
-        const [matchingDirection] = this.connections.filter((connection) => {
-            return connection.direction === direction;
-        });
-
-        if (matchingDirection) {
-            if (!matchingDirection.locked) {
-                return {
-                    hasRoom: true,
-                    newRoom: matchingDirection.room,
-                };
-            }
-        }
-
-        return { hasRoom: false, newRoom: '' };
     }
 
     private unlockConnection(item: Item) {

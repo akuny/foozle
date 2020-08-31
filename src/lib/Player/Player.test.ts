@@ -18,7 +18,9 @@ const mockPlayerPayload = {
 };
 
 describe('Player class', () => {
-    test('Is not undefined', () => {
-        expect(new Player(mockPlayerPayload)).toBeDefined();
+    describe('isAlive() method', () => {
+        test('Newly instantiated Player is alive', () => {
+            expect(new Player(mockPlayerPayload).isAlive()).toBe(true);
+        });
     });
 });

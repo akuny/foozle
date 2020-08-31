@@ -9,4 +9,8 @@ export class Player extends Inventory implements iPlayer {
         super(player.inventory);
         this.alive = player.alive;
     }
+
+    isAlive(): boolean {
+        return this.alive;
+    }
 }

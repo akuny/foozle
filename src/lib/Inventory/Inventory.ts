@@ -8,16 +8,8 @@ export abstract class Inventory implements iInventory {
         this.items = itemArr;
     }
 
-    showItems(): string {
-        const names = this.items.map((obj) => {
-            return obj.itemName;
-        });
-
-        if (names.length <= 1) {
-            return "You don't have anything in your pockets";
-        }
-
-        return names.join(', ');
+    addItem(itemToAdd: Item) {
+        return this.items.push(itemToAdd);
     }
 
     findItem(passedItemArr: string[]): { hasItem: boolean; item: Item } {
@@ -50,13 +42,21 @@ export abstract class Inventory implements iInventory {
         return emptyItem;
     }
 
-    addItem(itemToAdd: Item) {
-        return this.items.push(itemToAdd);
-    }
-
     removeItem(itemToRemove: Item): Item[] {
         return this.items.filter((item) => {
             return item.itemName !== itemToRemove.itemName;
         });
+    }
+
+    showItems(): string {
+        const names = this.items.map((obj) => {
+            return obj.itemName;
+        });
+
+        if (names.length <= 1) {
+            return "You don't have anything in your pockets";
+        }
+
+        return names.join(', ');
     }
 }
