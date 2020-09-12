@@ -13,16 +13,10 @@ export class Room extends Inventory implements iRoom {
         super(room.items);
         this.name = room.name;
         this.hasPlayer = room.hasPlayer;
-        this.connections = [];
-        room.connections.forEach((connection) =>
-            this.connections.push(connection)
-        );
-
+        this.connections = room.connections.map((connection) => connection);
         this.inactiveRoomStates = [];
-        room.roomStates.forEach((obj) => {
-            if (obj.active === false) {
-                this.inactiveRoomStates.push(obj);
-            }
+        this.inactiveRoomStates = room.roomStates.filter((roomState) => {
+            return roomState.active === false;
         });
 
         const [current] = room.roomStates.filter((obj) => {

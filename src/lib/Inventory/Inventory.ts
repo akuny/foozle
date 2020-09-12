@@ -4,9 +4,8 @@ import { Item } from '../../ts/types';
 export abstract class Inventory implements iInventory {
     items: Item[];
 
-    constructor(itemArr: Item[] | []) {
-        this.items = [];
-        itemArr.forEach((item) => this.items.push(item));
+    constructor(itemArr: Item[]) {
+        this.items = itemArr.map((item) => item);
     }
 
     addItem(itemToAdd: Item) {
