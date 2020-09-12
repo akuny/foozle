@@ -14,8 +14,11 @@ export class Room extends Inventory implements iRoom {
         this.name = room.name;
         this.hasPlayer = room.hasPlayer;
         this.connections = room.connections;
-        this.inactiveRoomStates = room.roomStates.filter((obj) => {
-            return obj.active === false;
+        this.inactiveRoomStates = [];
+        room.roomStates.forEach((obj) => {
+            if (obj.active === false) {
+                this.inactiveRoomStates.push(obj);
+            }
         });
 
         const [current] = room.roomStates.filter((obj) => {

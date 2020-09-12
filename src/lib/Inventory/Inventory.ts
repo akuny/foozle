@@ -4,8 +4,9 @@ import { Item } from '../../ts/types';
 export abstract class Inventory implements iInventory {
     items: Item[];
 
-    constructor(itemArr: Item[]) {
-        this.items = itemArr;
+    constructor(itemArr: Item[] | []) {
+        this.items = [];
+        itemArr.forEach((item) => this.items.push(item));
     }
 
     addItem(itemToAdd: Item) {
@@ -28,7 +29,7 @@ export abstract class Inventory implements iInventory {
             },
         };
 
-        if (this.items.length <= 0) {
+        if (this.getItemsArr().length === 0) {
             return emptyItem;
         }
 
@@ -42,6 +43,10 @@ export abstract class Inventory implements iInventory {
         return emptyItem;
     }
 
+    getInventoryLength(): number {
+        return this.getItemsArr().length;
+    }
+
     removeItem(itemToRemove: Item): Item[] {
         return this.items.filter((item) => {
             return item.itemName !== itemToRemove.itemName;
@@ -49,14 +54,20 @@ export abstract class Inventory implements iInventory {
     }
 
     showItems(): string {
-        const names = this.items.map((obj) => {
+        const names = this.getItemsArr().map((obj) => {
             return obj.itemName;
         });
 
-        if (names.length <= 1) {
+        if (names.length === 0) {
             return "You don't have anything in your pockets";
         }
 
         return names.join(', ');
+    }
+
+    private getItemsArr(): Item[] {
+        return this.items.filter((item) => {
+            return item.id !== 0;
+        });
     }
 }
