@@ -35,6 +35,7 @@ describe('Room class', () => {
         test('Changes room state as expected when valid trigger is passed', () => {
             let TestRoom = new Room(fakeDiningRoom);
             TestRoom.updateCurrentRoomState(fakeDiningRoom.items[0]);
+
             expect(TestRoom.currentRoomState.active).toBe(true);
             expect(TestRoom.currentRoomState.trigger).toBe('takekey');
             expect(TestRoom.currentRoomState.description).toBe(
