@@ -79,14 +79,11 @@ export class Game implements iGame {
             return room.name === result.newRoom;
         });
 
-        let newRoom: Room;
-
-        if (roomSearchResult) {
-            newRoom = roomSearchResult;
-        } else {
-            newRoom = this.currentRoom;
+        if (!roomSearchResult) {
+            return this.currentRoom.showCurrentRoomState();
         }
 
+        let newRoom = roomSearchResult;
         newRoom.hasPlayer = true;
         this.currentRoom.hasPlayer = false;
 
