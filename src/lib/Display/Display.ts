@@ -26,10 +26,13 @@ export class Display implements iDisplay {
     }
 
     turnOn(firstRoomDescription: string) {
-        let li = document.createElement('li');
-        li.appendChild(document.createTextNode('Welcome to foozle. Enter "help" to see a list of valid commands.'));
-        li.appendChild(document.createTextNode(firstRoomDescription));
-        this.screen.appendChild(li);
+        let welcome = document.createElement('li');
+        welcome.appendChild(document.createTextNode('Welcome to foozle. Enter "help" to see a list of valid commands.'));
+        this.screen.appendChild(welcome);
+        let begin = document.createElement('li');
+        begin.appendChild(document.createTextNode(firstRoomDescription));
+        this.screen.appendChild(begin);
+
         this.target.appendChild(this.screen);
         this.target.appendChild(this.commandLine);
 
