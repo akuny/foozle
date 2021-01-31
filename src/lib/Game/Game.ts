@@ -52,7 +52,7 @@ export class Game implements iGame {
             case 'other':
                 switch (action) {
                     case 'help':
-                        output = 'Here is some help...';
+                        output = 'Try these commands: north, south, east, west; look; inventory; take {object}, use {object}';
                         break;
                     case 'look':
                         output = this.currentRoom.showCurrentRoomState();

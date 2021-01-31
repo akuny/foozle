@@ -1,3 +1,3 @@
-const disk = require('../../../disk.json');
+const disk = require('../../disk.json');
 
 export default disk;

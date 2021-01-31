@@ -25,7 +25,7 @@ export class App {
             return this.updateGame(command);
         }
 
-        return this.display.render("That's an invalid command, amigo");
+        return this.display.render('Sorry, that\'s an invalid command. Enter "help" to see a list of valid commands.');
     }
 
     private updateGame(command: iCommand) {
