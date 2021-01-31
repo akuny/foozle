@@ -1,0 +1,40 @@
+body {
+  background-color: #282828;
+  color: #00ff66;
+  font-family: monospace, serif;
+  font-size: "24px";
+}
+
+form {
+  background: #282828;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  border-width: 0px;
+  border: 0px solid #282828;
+}
+
+form input {
+  border: 0;
+  padding: 10px;
+  width: 95%;
+  margin-right: 0.5%;
+  background: #282828;
+  font-family: monospace, serif;
+  color: #00ff66;
+  font-size: "24px";
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  margin: 0 0 12px 0;
+}
