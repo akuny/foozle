@@ -18,6 +18,8 @@ Now you can start it up:
 npm start
 ```
 
+The app is build and bundled on startup.
+
 ## Structure
 
 foozle's `index.js` file is a very simple server that exposes the
