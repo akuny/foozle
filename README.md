@@ -18,7 +18,7 @@ Now you can start it up:
 npm start
 ```
 
-The app is build and bundled on startup.
+The app is built and bundled on startup.
 
 ## Structure
 
