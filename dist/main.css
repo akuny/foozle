@@ -2,7 +2,7 @@ body {
   background-color: #282828;
   color: #00ff66;
   font-family: monospace, serif;
-  font-size: "24px";
+  font-size: 24px;
 }
 
 form {
@@ -23,7 +23,7 @@ form input {
   background: #282828;
   font-family: monospace, serif;
   color: #00ff66;
-  font-size: "24px";
+  font-size: 24px;
 }
 
 textarea:focus,

@@ -79,7 +79,7 @@ export class Command implements iCommand {
     }
 
     private handleMovementCommand(word: string) {
-        switch (this.action) {
+        switch (word) {
             case 'n':
                 this.action = 'north';
                 break;
