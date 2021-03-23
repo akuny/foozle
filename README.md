@@ -2,6 +2,8 @@
 
 > A text adventure game engine built with TypeScript.
 
+![Foozle Intro Screenshot](https://raw.githubusercontent.com/akuny/foozle/master/foozle-intro.png)
+
 ## Installation
 
 To run the app locally, clone it down and install dependencies:
