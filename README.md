@@ -2,7 +2,7 @@
 
 > A text adventure game engine built with TypeScript.
 
-![Foozle Intro Screenshot](https://raw.githubusercontent.com/akuny/foozle/master/foozle-intro.png)
+![Foozle Intro Screenshot](https://raw.githubusercontent.com/akuny/foozle/blob/master/foozle-intro.png)
 
 ## Installation
 
