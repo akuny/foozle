@@ -33,10 +33,7 @@ export class Game implements iGame {
         return this.currentRoom.showCurrentRoomState();
     }
 
-    update(
-        command: iCommand,
-        callback: (game: Game, output: string) => void
-    ): void {
+    update(command: iCommand) {
         let output = '';
         let { type, action, items } = command.getPayload();
 
@@ -65,7 +62,7 @@ export class Game implements iGame {
                 break;
         }
 
-        return callback(this, output);
+        return { newGamestate: this, output };
     }
 
     private movePlayer(direction: string): string {

@@ -58,10 +58,10 @@ export abstract class Inventory implements iInventory {
         });
 
         if (names.length === 0) {
-            return "You don't have anything in your pockets";
+            return 'You don\'t have anything in your pockets';
         }
 
-        return names.join(', ');
+        return `Here's what you have in your pockets: ${names.join(', ')}`;
     }
 
     private getItemsArr(): Item[] {

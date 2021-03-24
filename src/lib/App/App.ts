@@ -29,9 +29,9 @@ export class App {
     }
 
     private updateGame(command: iCommand) {
-        this.gameState.update(command, (newGamestate, output) => {
-            this.gameState = newGamestate;
-            return this.display.render(output);
-        });
+
+        const { newGamestate, output } = this.gameState.update(command);
+        this.gameState = newGamestate;
+        return this.display.render(output);
     }
 }
