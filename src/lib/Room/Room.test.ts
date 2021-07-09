@@ -26,7 +26,7 @@ describe('Room class', () => {
     describe('showCurrentRoomState() method', () => {
         test("Retuns descriptin of room's current state", () => {
             const TestRoom = new Room(fakeDiningRoom);
-            expect(TestRoom.showCurrentRoomState()).toBe(
+            expect(TestRoom.showState()).toBe(
                 'You are in the dining room. The table is set for a lavish meal. There is a rusty key on the table. You can go west to the foyer.'
             );
         });
@@ -34,7 +34,7 @@ describe('Room class', () => {
     describe('updateCurrentRoomState() method', () => {
         test('Changes room state as expected when valid trigger is passed', () => {
             let TestRoom = new Room(fakeDiningRoom);
-            TestRoom.updateCurrentRoomState(fakeDiningRoom.items[0]);
+            TestRoom.updateState(fakeDiningRoom.items[0]);
 
             expect(TestRoom.currentRoomState.active).toBe(true);
             expect(TestRoom.currentRoomState.trigger).toBe('takekey');

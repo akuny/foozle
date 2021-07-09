@@ -1,6 +1,6 @@
-import { Item } from '../types';
+import { GameState, Item } from '../types';
 
-export interface iCommand {
+export interface ICommand {
     getPayload(): {
         type: string;
         action: string;
@@ -9,32 +9,27 @@ export interface iCommand {
     isValid(): boolean;
 }
 
-export interface iDisk {
-    player: iPlayer;
-    rooms: iRoom[];
-}
-
-export interface iDisplay {
+export interface IDisplay {
     render(description: string): void;
     turnOn(description: string): void;
 }
 
-export interface iGame {
-    getCurrentRoom(): string;
-    update(command: iCommand, cb: (game: iGame, output: string) => void): void;
+export interface IGame {
+    start(): string;
+    update(command: ICommand): GameState;
 }
 
-export interface iInventory {
+export interface IInventory {
     findItem(itemNames: string[]): object;
     removeItem(itemToRemove: Item): Item[];
 }
 
-export interface iPlayer extends iInventory {
+export interface IPlayer extends IInventory {
     alive: boolean;
 }
 
-export interface iRoom extends iInventory {
+export interface IRoom extends IInventory {
     hasConnection(direction: string): { hasRoom: boolean; newRoom: string };
-    showCurrentRoomState(): string;
-    updateCurrentRoomState(item: Item): void;
+    showState(): string;
+    updateState(item: Item): void;
 }

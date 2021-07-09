@@ -1,7 +1,7 @@
-import { iInventory } from '../../ts/interfaces';
+import { IInventory } from '../../ts/interfaces';
 import { Item } from '../../ts/types';
 
-export abstract class Inventory implements iInventory {
+export abstract class Inventory implements IInventory {
     items: Item[];
 
     constructor(itemArr: Item[]) {
@@ -12,7 +12,7 @@ export abstract class Inventory implements iInventory {
         return this.items.push(itemToAdd);
     }
 
-    findItem(passedItemArr: string[]): { hasItem: boolean; item: Item } {
+    findItem(passedItemArr: string[]) {
         const emptyItem = {
             hasItem: false,
             item: {
@@ -42,17 +42,17 @@ export abstract class Inventory implements iInventory {
         return emptyItem;
     }
 
-    getInventoryLength(): number {
+    getInventoryLength() {
         return this.getItemsArr().length;
     }
 
-    removeItem(itemToRemove: Item): Item[] {
+    removeItem(itemToRemove: Item) {
         return this.items.filter((item) => {
             return item.itemName !== itemToRemove.itemName;
         });
     }
 
-    showItems(): string {
+    showItems() {
         const names = this.getItemsArr().map((obj) => {
             return obj.itemName;
         });
@@ -64,7 +64,7 @@ export abstract class Inventory implements iInventory {
         return `Here's what you have in your pockets: ${names.join(', ')}`;
     }
 
-    private getItemsArr(): Item[] {
+    private getItemsArr() {
         return this.items.filter((item) => {
             return item.id !== 0;
         });

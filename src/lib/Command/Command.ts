@@ -1,4 +1,4 @@
-import { iCommand } from '../../ts/interfaces';
+import { ICommand } from '../../ts/interfaces';
 
 import {
     MOVEMENT_COMMANDS,
@@ -8,7 +8,7 @@ import {
     ALL_COMMANDS,
 } from './commands';
 
-export class Command implements iCommand {
+export class Command implements ICommand {
     private valid: boolean;
     private type: string;
     private action: string;
@@ -22,11 +22,11 @@ export class Command implements iCommand {
         this.validate(rawInput);
     }
 
-    isValid(): boolean {
+    isValid() {
         return this.valid;
     }
 
-    getPayload(): { type: string; action: string; items: string[] } {
+    getPayload() {
         return {
             type: this.type,
             action: this.action,

@@ -1,15 +1,15 @@
-import { iCommand, iDisk, iGame } from '../../ts/interfaces';
-import { RoomTemplate } from '../../ts/types';
+import { ICommand, IGame } from '../../ts/interfaces';
+import { Disk, RoomTemplate } from '../../ts/types';
 import Player from '../Player';
 import Room from '../Room';
 
-export class Game implements iGame {
+export class Game implements IGame {
     currentRoom!: Room;
     otherRooms: Room[] = [];
     player: Player;
 
-    constructor(disk: iDisk) {
-        const cleanDisk = JSON.parse(
+    constructor(disk: Disk) {
+        const spinningDisk = JSON.parse(
             JSON.stringify(disk, (key, value) => {
                 return typeof value === 'string' &&
                     key !== 'description' &&
@@ -20,52 +20,56 @@ export class Game implements iGame {
             })
         );
 
-        this.player = new Player(cleanDisk.player);
+        this.player = new Player(spinningDisk.player);
 
-        cleanDisk.rooms.forEach((obj: RoomTemplate) => {
+        spinningDisk.rooms.forEach((obj: RoomTemplate) => {
             obj.hasPlayer
                 ? (this.currentRoom = new Room(obj))
                 : this.otherRooms.push(new Room(obj));
         });
     }
 
-    getCurrentRoom(): string {
-        return this.currentRoom.showCurrentRoomState();
+    start() {
+        return this.currentRoom.showState();
     }
 
-    update(command: iCommand) {
-        let output = '';
+    update(command: ICommand) {
         let { type, action, items } = command.getPayload();
+        let description = this.currentRoom.showState();
 
         switch (type) {
             case 'move':
-                output = this.movePlayer(action);
+                description = this.movePlayer(action);
                 break;
             case 'use':
-                output = this.useItem(items);
+                description = this.useItem(items);
                 break;
             case 'take':
-                output = this.takeItem(items);
+                description = this.takeItem(items);
+                break;
             case 'other':
                 switch (action) {
                     case 'help':
-                        output = 'Try these commands: north, south, east, west; look; inventory; take [thing in room]; use [thing in room or inventory]';
-                        break;
-                    case 'look':
-                        output = this.currentRoom.showCurrentRoomState();
+                        description = `Try these commands: north, south, east, west; 
+                                        look; inventory; take [thing in room]; 
+                                        use [thing in room or inventory]`;
                         break;
                     case 'inventory':
-                        output = this.player.showItems();
+                        description = this.player.showItems();
                         break;
+                    default:
                 }
             default:
-                break;
         }
 
-        return { newGamestate: this, output };
+        return this.respond(description);
     }
 
-    private movePlayer(direction: string): string {
+    private respond(description: string) {
+        return { game: this, description }
+    }
+
+    private movePlayer(direction: string) {
         let result = this.currentRoom.hasConnection(direction);
 
         if (!result.hasRoom) {
@@ -77,7 +81,7 @@ export class Game implements iGame {
         });
 
         if (!roomSearchResult) {
-            return this.currentRoom.showCurrentRoomState();
+            return this.currentRoom.showState();
         }
 
         let newRoom = roomSearchResult;
@@ -95,7 +99,7 @@ export class Game implements iGame {
         this.otherRooms = newOtherRooms;
         this.currentRoom = newRoom;
 
-        return this.currentRoom.showCurrentRoomState();
+        return this.currentRoom.showState();
     }
 
     private takeItem(items: string[]) {
@@ -104,23 +108,28 @@ export class Game implements iGame {
         if (result.hasItem && result.item.canTake) {
             this.currentRoom.removeItem(result.item);
             this.player.addItem(result.item);
-            this.currentRoom.updateCurrentRoomState(result.item);
+            this.currentRoom.updateState(result.item);
             return result.item.takeResult;
         }
+        
         return 'I don\'t think you can pick that up.';
     }
 
     private useItem(items: string[]) {
         const playerSearchResult = this.player.findItem(items);
+        
         if (playerSearchResult.hasItem && playerSearchResult.item.canUse) {
-            this.currentRoom.updateCurrentRoomState(playerSearchResult.item);
+            this.currentRoom.updateState(playerSearchResult.item);
             return playerSearchResult.item.useResult;
         }
+
         const roomSearchResult = this.currentRoom.findItem(items);
+
         if (roomSearchResult.hasItem && roomSearchResult.item.canUse) {
-            this.currentRoom.updateCurrentRoomState(roomSearchResult.item);
+            this.currentRoom.updateState(roomSearchResult.item);
             return roomSearchResult.item.useResult;
         }
+
         return 'You don\'t have one of those!';
     }
 }

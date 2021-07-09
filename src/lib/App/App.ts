@@ -1,4 +1,5 @@
-import { iCommand, iDisk } from '../../ts/interfaces';
+import { IGame } from '../../ts/interfaces';
+import { Disk, GameState } from '../../ts/types';
 import Command from '../Command';
 import Display from '../Display';
 import Game from '../Game';
@@ -6,31 +7,27 @@ import Game from '../Game';
 export class App {
     target: HTMLDivElement;
     display: Display;
-    gameState: Game;
+    game: IGame;
 
-    constructor(target: HTMLDivElement, disk: iDisk) {
+    constructor(target: HTMLDivElement, disk: Disk) {
         this.target = target;
         this.display = new Display(this, this.target);
-        this.gameState = new Game(disk);
+        this.game = new Game(disk);
     }
 
     init() {
-        this.display.turnOn(this.gameState.getCurrentRoom());
+        this.display.turnOn(this.game.start());
     }
 
     handleUserInput(userInput: string) {
         let command = new Command(userInput);
 
-        if (command.isValid()) {
-            return this.updateGame(command);
+        if (!command.isValid()) {
+            return this.display.render('Sorry, that\'s an invalid command. Enter "help" to see a list of valid commands.');
         }
 
-        return this.display.render('Sorry, that\'s an invalid command. Enter "help" to see a list of valid commands.');
-    }
-
-    private updateGame(command: iCommand) {
-        const { newGamestate, output } = this.gameState.update(command);
-        this.gameState = newGamestate;
-        return this.display.render(output);
+        const { game, description }: GameState = this.game.update(command);
+        this.game = game;
+        return this.display.render(description);
     }
 }

@@ -1,8 +1,8 @@
-import { iRoom } from '../../ts/interfaces';
+import { IRoom } from '../../ts/interfaces';
 import { Item, RoomConnection, RoomState, RoomTemplate } from '../../ts/types';
 import Inventory from '../Inventory';
 
-export class Room extends Inventory implements iRoom {
+export class Room extends Inventory implements IRoom {
     name: string;
     inactiveRoomStates: RoomState[];
     currentRoomState: RoomState;
@@ -14,7 +14,6 @@ export class Room extends Inventory implements iRoom {
         this.name = room.name;
         this.hasPlayer = room.hasPlayer;
         this.connections = room.connections.map((connection) => connection);
-        this.inactiveRoomStates = [];
         this.inactiveRoomStates = room.roomStates.filter((roomState) => {
             return roomState.active === false;
         });
@@ -43,11 +42,11 @@ export class Room extends Inventory implements iRoom {
         return { hasRoom: false, newRoom: '' };
     }
 
-    showCurrentRoomState(): string {
+    showState() {
         return this.currentRoomState.description;
     }
 
-    updateCurrentRoomState(item: Item): void {
+    updateState(item: Item) {
         let matchingTrigger = '';
 
         const { triggers, isKey } = item;
