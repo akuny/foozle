@@ -1,10 +1,11 @@
 import { iCommand } from '../../ts/interfaces';
 
 import {
-    validMovementCommands,
-    validUseCommands,
-    validTakeCommands,
-    validUtilityCommands,
+    MOVEMENT_COMMANDS,
+    USE_COMMANDS,
+    TAKE_COMMANDS,
+    UTILITY_COMMANDS,
+    ALL_COMMANDS,
 } from './commands';
 
 export class Command implements iCommand {
@@ -12,25 +13,12 @@ export class Command implements iCommand {
     private type: string;
     private action: string;
     private items: string[];
-    private validMovementCommands: string[];
-    private validUseCommands: string[];
-    private validTakeCommands: string[];
-    private validUtilityCommands: string[];
-    private allCommands: string[];
 
     constructor(rawInput: string) {
         this.valid = false;
         this.type = '';
         this.action = '';
         this.items = ['none'];
-        this.validMovementCommands = validMovementCommands;
-        this.validUseCommands = validUseCommands;
-        this.validTakeCommands = validTakeCommands;
-        this.validUtilityCommands = validUtilityCommands;
-        this.allCommands = this.validMovementCommands
-            .concat(this.validTakeCommands)
-            .concat(this.validUseCommands)
-            .concat(this.validUtilityCommands);
         this.validate(rawInput);
     }
 
@@ -50,7 +38,7 @@ export class Command implements iCommand {
         const splitInput = rawInput.toLowerCase().trim().split(' ');
 
         splitInput.forEach((word) => {
-            if (this.allCommands.includes(word)) {
+            if (ALL_COMMANDS.includes(word)) {
                 this.valid = true;
                 this.action = word;
             } else {
@@ -60,19 +48,19 @@ export class Command implements iCommand {
                 this.items.push(word);
             }
 
-            if (this.validMovementCommands.includes(word)) {
+            if (MOVEMENT_COMMANDS.includes(word)) {
                 this.handleMovementCommand(word);
             }
 
-            if (this.validUseCommands.includes(word)) {
+            if (USE_COMMANDS.includes(word)) {
                 this.handleUseCommand(word);
             }
 
-            if (this.validTakeCommands.includes(word)) {
+            if (TAKE_COMMANDS.includes(word)) {
                 this.handleTakeCommand(word);
             }
 
-            if (this.validUtilityCommands.includes(word)) {
+            if (UTILITY_COMMANDS.includes(word)) {
                 this.handleUtilityCommand(word);
             }
         });

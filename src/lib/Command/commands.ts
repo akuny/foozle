@@ -1,4 +1,4 @@
-export const validMovementCommands = [
+export const MOVEMENT_COMMANDS = [
     'n',
     'north',
     's',
@@ -9,11 +9,11 @@ export const validMovementCommands = [
     'west',
 ];
 
-export const validUseCommands = ['use', 'play', 'open'];
+export const USE_COMMANDS = ['use', 'play', 'open'];
 
-export const validTakeCommands = ['take'];
+export const TAKE_COMMANDS = ['take'];
 
-export const validUtilityCommands = [
+export const UTILITY_COMMANDS = [
     'h',
     'help',
     'l',
@@ -21,3 +21,8 @@ export const validUtilityCommands = [
     'i',
     'inventory',
 ];
+
+export const ALL_COMMANDS = MOVEMENT_COMMANDS
+    .concat(USE_COMMANDS)
+    .concat(TAKE_COMMANDS)
+    .concat(UTILITY_COMMANDS);
