@@ -65,7 +65,9 @@ describe('Inventory class', () => {
         test('Returns comma-separated list of itemName values if inventory contains more than one item', () => {
             const testInstance = new TestClass(fakeInventory);
 
-            expect(testInstance.showItems()).toBe('Here\'s what you have in your pockets: pencil, mug');
+            expect(testInstance.showItems()).toBe(
+                "Here's what you have in your pockets: pencil, mug"
+            );
         });
         test('Returns single itemName value if only one item is in inventory', () => {
             const testInstance = new TestClass([
@@ -83,7 +85,9 @@ describe('Inventory class', () => {
                 },
             ]);
 
-            expect(testInstance.showItems()).toBe('Here\'s what you have in your pockets: pencil');
+            expect(testInstance.showItems()).toBe(
+                "Here's what you have in your pockets: pencil"
+            );
         });
         test('Returns empty inventory message if inventory contains no items', () => {
             const testInstance = new TestClass([]);

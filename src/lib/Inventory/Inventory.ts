@@ -39,6 +39,7 @@ export abstract class Inventory implements IInventory {
         if (itemSearchResult) {
             return { hasItem: true, item: itemSearchResult };
         }
+
         return emptyItem;
     }
 

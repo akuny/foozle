@@ -10,7 +10,7 @@ export interface ICommand {
 }
 
 export interface IDisplay {
-    render(description: string): void;
+    show(description: string): void;
     turnOn(description: string): void;
 }
 
@@ -25,7 +25,7 @@ export interface IInventory {
 }
 
 export interface IPlayer extends IInventory {
-    alive: boolean;
+    isAlive(): boolean;
 }
 
 export interface IRoom extends IInventory {

@@ -19,7 +19,7 @@ export class Display implements IDisplay {
         this.screen = document.createElement('ul');
     }
 
-    render(description: string) {
+    show(description: string) {
         let li = document.createElement('li');
         li.appendChild(document.createTextNode(description));
         this.screen.appendChild(li);

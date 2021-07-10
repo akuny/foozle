@@ -66,7 +66,7 @@ export class Game implements IGame {
     }
 
     private respond(description: string) {
-        return { game: this, description }
+        return { game: this, description };
     }
 
     private movePlayer(direction: string) {
@@ -111,13 +111,13 @@ export class Game implements IGame {
             this.currentRoom.updateState(result.item);
             return result.item.takeResult;
         }
-        
+
         return 'I don\'t think you can pick that up.';
     }
 
     private useItem(items: string[]) {
         const playerSearchResult = this.player.findItem(items);
-        
+
         if (playerSearchResult.hasItem && playerSearchResult.item.canUse) {
             this.currentRoom.updateState(playerSearchResult.item);
             return playerSearchResult.item.useResult;

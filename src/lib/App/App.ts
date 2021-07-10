@@ -23,11 +23,13 @@ export class App {
         let command = new Command(userInput);
 
         if (!command.isValid()) {
-            return this.display.render('Sorry, that\'s an invalid command. Enter "help" to see a list of valid commands.');
+            return this.display.show(
+                'Sorry, that\'s an invalid command. Enter "help" to see a list of valid commands.'
+            );
         }
 
         const { game, description }: GameState = this.game.update(command);
         this.game = game;
-        return this.display.render(description);
+        return this.display.show(description);
     }
 }
