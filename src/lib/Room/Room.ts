@@ -1,19 +1,21 @@
-import { IRoom } from '../../ts/interfaces';
+import { IInventory, IRoom } from '../../ts/interfaces';
 import { Item, RoomConnection, RoomState, RoomTemplate } from '../../ts/types';
-import Inventory from '../Inventory';
+import HasInventory from '../HasInventory';
 
-export class Room extends Inventory implements IRoom {
+export class Room extends HasInventory implements IRoom {
     name: string;
+    hasPlayer: boolean;
     inactiveRoomStates: RoomState[];
     currentRoomState: RoomState;
-    hasPlayer: boolean;
     connections: RoomConnection[];
 
-    constructor(room: RoomTemplate) {
-        super(room.items);
+    constructor(room: RoomTemplate, inventory: IInventory) {
+        super(inventory, room.items);
+
         this.name = room.name;
         this.hasPlayer = room.hasPlayer;
         this.connections = room.connections.map((connection) => connection);
+
         this.inactiveRoomStates = room.roomStates.filter((roomState) => {
             return roomState.active === false;
         });

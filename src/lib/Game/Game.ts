@@ -1,5 +1,6 @@
 import { ICommand, IGame } from '../../ts/interfaces';
 import { Disk, RoomTemplate } from '../../ts/types';
+import Inventory from '../Inventory';
 import Player from '../Player';
 import Room from '../Room';
 
@@ -20,12 +21,12 @@ export class Game implements IGame {
             })
         );
 
-        this.player = new Player(spinningDisk.player);
+        this.player = new Player(spinningDisk.player, new Inventory());
 
         spinningDisk.rooms.forEach((obj: RoomTemplate) => {
             obj.hasPlayer
-                ? (this.currentRoom = new Room(obj))
-                : this.otherRooms.push(new Room(obj));
+                ? (this.currentRoom = new Room(obj, new Inventory()))
+                : this.otherRooms.push(new Room(obj, new Inventory()));
         });
     }
 
@@ -55,7 +56,7 @@ export class Game implements IGame {
                                         use [thing in room or inventory]`;
                         break;
                     case 'inventory':
-                        description = this.player.showItems();
+                        description = this.player.look();
                         break;
                     default:
                 }
@@ -103,33 +104,30 @@ export class Game implements IGame {
     }
 
     private takeItem(items: string[]) {
-        const result = this.currentRoom.findItem(items);
+        const soughtItem = this.currentRoom.search(items);
 
-        if (result.hasItem && result.item.canTake) {
-            this.currentRoom.removeItem(result.item);
-            this.player.addItem(result.item);
-            this.currentRoom.updateState(result.item);
-            return result.item.takeResult;
+        if (!soughtItem.canTake) {
+            return 'I don\'t think you can pick that up.';
         }
 
-        return 'I don\'t think you can pick that up.';
+        this.currentRoom.drop(soughtItem);
+        this.player.take(soughtItem);
+        this.currentRoom.updateState(soughtItem);
+        return soughtItem.takeResult;
     }
 
-    private useItem(items: string[]) {
-        const playerSearchResult = this.player.findItem(items);
+    private useItem(terms: string[]): string {
+        const items = [];
+        items.push(this.player.search(terms));
+        items.push(this.currentRoom.search(terms));
 
-        if (playerSearchResult.hasItem && playerSearchResult.item.canUse) {
-            this.currentRoom.updateState(playerSearchResult.item);
-            return playerSearchResult.item.useResult;
+        const [item] = items.filter((v) => v.canUse);
+
+        if (item) {
+            this.currentRoom.updateState(item);
+            return item.useResult;
         }
 
-        const roomSearchResult = this.currentRoom.findItem(items);
-
-        if (roomSearchResult.hasItem && roomSearchResult.item.canUse) {
-            this.currentRoom.updateState(roomSearchResult.item);
-            return roomSearchResult.item.useResult;
-        }
-
-        return 'You don\'t have one of those!';
+        return 'You can\'t use that!';
     }
 }

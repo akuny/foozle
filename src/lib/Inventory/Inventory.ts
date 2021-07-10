@@ -1,73 +1,68 @@
 import { IInventory } from '../../ts/interfaces';
 import { Item } from '../../ts/types';
 
-export abstract class Inventory implements IInventory {
-    items: Item[];
+export class Inventory implements IInventory {
+    items: Item[] = [];
 
-    constructor(itemArr: Item[]) {
-        this.items = itemArr.map((item) => item);
+    add(item: Item | Item[]): void {
+        if (Array.isArray(item)) {
+            this.items = this.items.concat(item);
+        } else {
+            this.items.push(item);
+        }
     }
 
-    addItem(itemToAdd: Item) {
-        return this.items.push(itemToAdd);
+    remove(item: Item): void {
+        this.items.filter((v) => {
+            return v.itemName !== item.itemName;
+        });
     }
 
-    findItem(passedItemArr: string[]) {
-        const emptyItem = {
-            hasItem: false,
-            item: {
-                id: 0,
-                itemName: '',
-                isKey: false,
-                canTake: false,
-                canUse: true,
-                canUseIn: '',
-                takeResult: "You can't take that!",
-                useResult: "You can't use that!",
-                triggers: [''],
-            },
+    find(searchTerms: string[]): Item {
+        const nothing: Item = {
+            id: 0,
+            itemName: '',
+            isKey: false,
+            canTake: false,
+            canUse: false,
+            canUseIn: '',
+            takeResult: "You can't take that!",
+            useResult: "You can't use that!",
+            triggers: [''],
         };
 
-        if (this.getItemsArr().length === 0) {
-            return emptyItem;
+        if (this.size() <= 0) {
+            return nothing;
         }
 
-        const [itemSearchResult] = this.items.filter((item) => {
-            return passedItemArr.includes(item.itemName);
-        });
+        const itemSearchResult = this.items.filter((item) =>
+            searchTerms.includes(item.itemName)
+        );
 
-        if (itemSearchResult) {
-            return { hasItem: true, item: itemSearchResult };
+        if (itemSearchResult.length === 1) {
+            return itemSearchResult[0];
         }
 
-        return emptyItem;
+        return nothing;
     }
 
-    getInventoryLength() {
-        return this.getItemsArr().length;
+    size(): number {
+        if (this.items.length > 0) {
+            return this.items.filter((item) => item.id !== 0).length;
+        }
+
+        return 0;
     }
 
-    removeItem(itemToRemove: Item) {
-        return this.items.filter((item) => {
-            return item.itemName !== itemToRemove.itemName;
-        });
-    }
-
-    showItems() {
-        const names = this.getItemsArr().map((obj) => {
-            return obj.itemName;
-        });
+    description(): string {
+        const names = this.items
+            .map((obj) => obj.itemName)
+            .filter((v, i, arr) => arr.indexOf(v) === i);
 
         if (names.length === 0) {
             return 'You don\'t have anything in your pockets';
         }
 
         return `Here's what you have in your pockets: ${names.join(', ')}`;
-    }
-
-    private getItemsArr() {
-        return this.items.filter((item) => {
-            return item.id !== 0;
-        });
     }
 }

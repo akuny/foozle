@@ -1,8 +1,9 @@
+import Inventory from '../Inventory';
 import { Player } from './Player';
 
-const mockPlayerPayload = {
+const player = {
     alive: true,
-    inventory: [
+    items: [
         {
             id: 2,
             itemName: 'key',
@@ -19,8 +20,8 @@ const mockPlayerPayload = {
 
 describe('Player class', () => {
     describe('isAlive() method', () => {
-        test('Newly instantiated Player is alive', () => {
-            expect(new Player(mockPlayerPayload).isAlive()).toBe(true);
+        test('A newly created player is alive', () => {
+            expect(new Player(player, new Inventory()).isAlive()).toBe(true);
         });
     });
 });

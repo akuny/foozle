@@ -26,7 +26,7 @@ const fakeInventory: Item[] = [
     },
 ];
 
-const fakeItem = {
+const fakeItem: Item = {
     id: 88,
     itemName: 'camera',
     isKey: false,
@@ -38,61 +38,64 @@ const fakeItem = {
     triggers: ['becomeFamouse'],
 };
 
-class TestClass extends Inventory {
-    constructor(inventoryArr: Item[]) {
-        super(inventoryArr);
-    }
-}
-
 describe('Inventory class', () => {
-    describe('addItem() method', () => {
+    describe('add() method', () => {
         test('Adds new item to inventory', () => {
-            const testInstance = new TestClass(fakeInventory);
-            testInstance.addItem(fakeItem);
+            // Setup
+            const inventory = new Inventory();
+            inventory.add(fakeInventory);
 
-            expect(testInstance.getInventoryLength()).toBe(3);
+            expect(inventory.size()).toBe(2);
+
+            inventory.add(fakeItem);
+
+            expect(inventory.size()).toBe(3);
         });
     });
-    describe('findItem() method', () => {
-        test('Returns true if item is in inventory', () => {
-            const testInstance = new TestClass(fakeInventory);
-            const result = testInstance.findItem(['the', 'pencil']);
+    describe('find() method', () => {
+        test('Finds an item if it has that item', () => {
+            // Setup
+            const inventory = new Inventory();
+            inventory.add(fakeInventory);
 
-            expect(result.hasItem).toBe(true);
+            const result = inventory.find(['the', 'pencil']);
+
+            expect(result.canTake).toBe(true);
         });
     });
-    describe('showItems() method', () => {
-        test('Returns comma-separated list of itemName values if inventory contains more than one item', () => {
-            const testInstance = new TestClass(fakeInventory);
+    describe('size() method', () => {
+        test('Returns quantity of items in inventory', () => {
+            // Setup
+            const inventory = new Inventory();
+            inventory.add(fakeItem);
 
-            expect(testInstance.showItems()).toBe(
+            expect(inventory.size()).toBe(1);
+        });
+    });
+    describe('description() method', () => {
+        test('Returns comma-separated list of items if inventory contains more than one item', () => {
+            // Setup
+            const inventory = new Inventory();
+            inventory.add(fakeInventory);
+
+            expect(inventory.description()).toBe(
                 "Here's what you have in your pockets: pencil, mug"
             );
         });
-        test('Returns single itemName value if only one item is in inventory', () => {
-            const testInstance = new TestClass([
-                {
-                    id: 66,
-                    itemName: 'pencil',
-                    isKey: false,
-                    canTake: true,
-                    canUse: true,
-                    canUseIn: '',
-                    takeResult: 'You pick up the pencil',
-                    useResult:
-                        'You write a reminder to yourself to pick up milk.',
-                    triggers: ['writeNote'],
-                },
-            ]);
+        test('Returns single item if only one item is in inventory', () => {
+            // Setup
+            const inventory = new Inventory();
+            inventory.add(fakeItem);
 
-            expect(testInstance.showItems()).toBe(
-                "Here's what you have in your pockets: pencil"
+            expect(inventory.description()).toBe(
+                "Here's what you have in your pockets: camera"
             );
         });
         test('Returns empty inventory message if inventory contains no items', () => {
-            const testInstance = new TestClass([]);
+            // Setup
+            const inventory = new Inventory();
 
-            expect(testInstance.showItems()).toBe(
+            expect(inventory.description()).toBe(
                 "You don't have anything in your pockets"
             );
         });
