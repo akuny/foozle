@@ -5,21 +5,24 @@ import Display from '../Display';
 import Game from '../Game';
 
 export class App {
+    game: IGame;
     target: HTMLDivElement;
     display: Display;
-    game: IGame;
 
     constructor(target: HTMLDivElement, disk: Disk) {
-        this.target = target;
-        this.display = new Display(this, this.target);
         this.game = new Game(disk);
+        this.target = target;
+        this.display = new Display(
+            this.target,
+            this.handleUserInput.bind(this)
+        );
     }
 
-    init() {
+    init(): void {
         this.display.turnOn(this.game.start());
     }
 
-    handleUserInput(userInput: string) {
+    handleUserInput(userInput: string): void {
         let command = new Command(userInput);
 
         if (!command.isValid()) {
@@ -30,6 +33,6 @@ export class App {
 
         const { game, description }: GameState = this.game.update(command);
         this.game = game;
-        return this.display.show(description);
+        this.display.show(description);
     }
 }

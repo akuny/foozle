@@ -1,16 +1,15 @@
 import { IDisplay } from '../../ts/interfaces';
-import App from '../App';
 
 export class Display implements IDisplay {
-    app: App;
     target: HTMLDivElement;
+    broadcastChange: (text: string) => void;
     commandLine: HTMLFormElement;
     inputField: HTMLInputElement;
     screen: HTMLUListElement;
 
-    constructor(app: App, target: HTMLDivElement) {
-        this.app = app;
+    constructor(target: HTMLDivElement, handler: (text: string) => void) {
         this.target = target;
+        this.broadcastChange = handler;
         this.commandLine = document.createElement('form');
         this.inputField = document.createElement('input');
         this.inputField.setAttribute('id', 'terminal');
@@ -19,15 +18,19 @@ export class Display implements IDisplay {
         this.screen = document.createElement('ul');
     }
 
-    show(description: string) {
+    show(description: string): void {
         let li = document.createElement('li');
         li.appendChild(document.createTextNode(description));
         this.screen.appendChild(li);
     }
 
-    turnOn(firstRoomDescription: string) {
+    turnOn(firstRoomDescription: string): void {
         let welcome = document.createElement('li');
-        welcome.appendChild(document.createTextNode('Welcome to foozle. Enter "help" to see a list of valid commands.'));
+        welcome.appendChild(
+            document.createTextNode(
+                'Welcome to foozle. Enter "help" to see a list of valid commands.'
+            )
+        );
         this.screen.appendChild(welcome);
         let begin = document.createElement('li');
         begin.appendChild(document.createTextNode(firstRoomDescription));
@@ -40,7 +43,7 @@ export class Display implements IDisplay {
         input.focus();
         this.commandLine.addEventListener('submit', (e) => {
             e.preventDefault();
-            this.app.handleUserInput(input.value);
+            this.broadcastChange(input.value);
             input.value = '';
         });
     }
