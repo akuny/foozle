@@ -1,5 +1,5 @@
 import { IGame } from '../../ts/interfaces';
-import { Disk, GameState } from '../../ts/types';
+import { Disk } from '../../ts/types';
 import Command from '../Command';
 import Display from '../Display';
 import Game from '../Game';
@@ -19,7 +19,7 @@ export class App {
     }
 
     init(): void {
-        this.display.turnOn(this.game.start());
+        this.display.turnOn(this.game.describe());
     }
 
     handleUserInput(userInput: string): void {
@@ -31,8 +31,8 @@ export class App {
             );
         }
 
-        const { game, description }: GameState = this.game.update(command);
-        this.game = game;
-        this.display.show(description);
+        const updatedGame = this.game.update(command);
+        this.game = updatedGame;
+        this.display.show(updatedGame.describe());
     }
 }

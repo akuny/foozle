@@ -30,11 +30,11 @@ export class Game implements IGame {
         });
     }
 
-    start() {
+    describe() {
         return this.currentRoom.showState();
     }
 
-    update(command: ICommand) {
+    update(command: ICommand): IGame {
         let { type, action, items } = command.getPayload();
         let description = this.currentRoom.showState();
 
@@ -51,8 +51,8 @@ export class Game implements IGame {
             case 'other':
                 switch (action) {
                     case 'help':
-                        description = `Try these commands: north, south, east, west; 
-                                        look; inventory; take [thing in room]; 
+                        description = `Try these commands: north, south, east, west;
+                                        look; inventory; take [thing in room];
                                         use [thing in room or inventory]`;
                         break;
                     case 'inventory':
@@ -63,11 +63,7 @@ export class Game implements IGame {
             default:
         }
 
-        return this.respond(description);
-    }
-
-    private respond(description: string) {
-        return { game: this, description };
+        return this;
     }
 
     private movePlayer(direction: string) {
@@ -117,15 +113,16 @@ export class Game implements IGame {
     }
 
     private useItem(terms: string[]): string {
-        const items = [];
-        items.push(this.player.search(terms));
-        items.push(this.currentRoom.search(terms));
+        const availableItems = [
+            this.player.search(terms),
+            this.currentRoom.search(terms),
+        ];
 
-        const [item] = items.filter((v) => v.canUse);
+        const [usableItem] = availableItems.filter((item) => item.canUse);
 
-        if (item) {
-            this.currentRoom.updateState(item);
-            return item.useResult;
+        if (usableItem) {
+            this.currentRoom.updateState(usableItem);
+            return usableItem.useResult;
         }
 
         return 'You can\'t use that!';

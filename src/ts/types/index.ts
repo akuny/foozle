@@ -3,12 +3,7 @@ import { IGame, IPlayer, IRoom } from '../interfaces';
 export type Disk = {
     player: IPlayer;
     rooms: IRoom[];
-}
-
-export type GameState = {
-    game: IGame;
-    description: string;
-}
+};
 
 export type Item = {
     id: number;

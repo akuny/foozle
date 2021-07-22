@@ -1,4 +1,4 @@
-import { GameState, Item } from '../types';
+import { Item } from '../types';
 
 export interface ICommand {
     getPayload(): {
@@ -15,8 +15,8 @@ export interface IDisplay {
 }
 
 export interface IGame {
-    start(): string;
-    update(command: ICommand): GameState;
+    describe(): string;
+    update(command: ICommand): IGame;
 }
 
 export interface IHasInventory {
