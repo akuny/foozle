@@ -15,9 +15,7 @@ describe('Game class', () => {
             const testGame = new Game(fakeDisk);
             const result = testGame.describe();
             expect(result).toBe(
-                `You are in the foyer of a small white house. You can
-                go east to the dining room or west to the living room.
-                There is a cellar door to your north; it is locked.`
+                'You are in the foyer of a small white house. You can go east to the dining room or west to the living room. There is a cellar door to your north; it is locked.'
             );
         });
         test('', () => {});

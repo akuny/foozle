@@ -1,4 +1,4 @@
-import { IGame, IPlayer, IRoom } from '../interfaces';
+import { IGame, IPlayer, IRoom } from './interfaces';
 
 export type Disk = {
     player: IPlayer;
